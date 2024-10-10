@@ -3,11 +3,12 @@ import pygame
 
 from Tablero import Tablero
 from Ventana import Ventana
+from menu import mostrar_menu
 
 #tamaños
 CELDA_SIZE = 30
 MARGIN = 40
-ROWS, COLS = 5, 5
+#ROWS, COLS = 5, 5
 
 #colores
 NEGRO = (0, 0, 0)
@@ -19,6 +20,7 @@ ROJO = (255, 0, 0)
 class Main:
     def __init__(self):
         self.window = Ventana(600, 400)
+        self.rows, self.cols = mostrar_menu(self.window.screen) #muestra el menu y tamano del tablero
         self.hints = (
             [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],#pistas horizontales
             [[2], [1, 1], [1, 1], [1, 1], [2]]#pistas verticales
@@ -30,7 +32,7 @@ class Main:
             [0, 1, 0, 1, 0],
             [0, 0, 1, 0, 0]
         ]#tablero solucion
-        self.board = Tablero(ROWS, COLS, self.hints, self.solution)
+        self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
         self.running = True
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
