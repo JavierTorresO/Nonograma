@@ -18,12 +18,12 @@ def mostrar_menu_nanogramas(screen, rows, cols):
     while True:
         screen.fill(BLANCO)
 
-        # Posición del mouse
+        # Posicion del mouse
         mouse_pos = pygame.mouse.get_pos()
 
         for i, opcion in enumerate(opciones):
             if i == seleccion:
-                color = ROJO  # Color rojo para la opción seleccionada
+                color = ROJO  # Color rojo para la opcion seleccionada
             else:
                 color = NEGRO
 
@@ -32,7 +32,7 @@ def mostrar_menu_nanogramas(screen, rows, cols):
             text_rect = text_surface.get_rect(topleft=(100, 100 + i * 50))
             screen.blit(text_surface, text_rect)
 
-            # Cambiar la selección con el mouse
+            # Cambiar la seleccion con el mouse
             if text_rect.collidepoint(mouse_pos):
                 seleccion = i
 
@@ -59,13 +59,11 @@ def mostrar_menu_nanogramas(screen, rows, cols):
                         if text_rect.collidepoint(event.pos):
                             return seleccionar_nanograma(i, rows, cols)  
 
-# Retorna el nanograma según la opción seleccionada
+# Retorna el nanograma segun la opcion seleccionada
 def seleccionar_nanograma(seleccion, rows, cols):
     if seleccion == 0:
         return (rows, cols, [[1, 1], [1, 1]], [[0, 1], [1, 0]])  # Pistas y solucion para Nanograma 1
     if seleccion == 1:
         return (rows, cols, [[2], [1]], [[1, 0], [0, 1]])  # Pistas y solucion para Nanograma 2
-    if seleccion == 2:  # Opción "Volver"
+    if seleccion == 2:  # Opcion "Volver"
         return None  # Indica que el usuario quiere volver
-
-
