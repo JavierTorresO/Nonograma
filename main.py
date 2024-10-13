@@ -16,6 +16,12 @@ ROJO = (255, 0, 0)
 
 class Main:
     def __init__(self):
+        pygame.mixer.init()  # Inicializar el mixer de Pygame
+
+        # Cargar sonidos
+        self.sound_click = pygame.mixer.Sound("click-sound.mp3")  #al hacer clic en una celda
+        self.sound_win = pygame.mixer.Sound("win-sound.mp3")  #al ganar el juego
+
         self.window = Ventana(600, 400)
         self.rows, self.cols = mostrar_menu(self.window.screen)  # Muestra el menu y tamaño del tablero
         self.hints = (
@@ -46,6 +52,12 @@ class Main:
             if self.board.check_win():
                 font = pygame.font.SysFont('Comic Sans MS', 40)
                 win_text = font.render("¡Ganaste!", True, ROJO)
+
+                # Reproducir el sonido de ganar (solo una vez)
+                if not hasattr(self, "win_sound_played"):
+                    pygame.mixer.Sound.play(self.sound_win)
+                    self.win_sound_played = True
+
                 # Efecto de baile
                 self.bounce_offset += self.bounce_direction * 1.2
                 if abs(self.bounce_offset) >= 6:  # Cambiar direccion
@@ -66,15 +78,20 @@ class Main:
                     cell = self.board.get_cell(pos)
                     if cell:
                         cell.toggle()
+
+                        # Reproducir el sonido de clic en la celda
+                        pygame.mixer.Sound.play(self.sound_click)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.return_to_menu()  # Volver al menu cuando se presiona Escape
 
     def return_to_menu(self):
-        # Volver al menu de seleccion 
+        # Volver al menu de seleccion
         self.rows, self.cols = mostrar_menu(self.window.screen)
         # Reiniciar el tablero con el nuevo tamano
         self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
+        if hasattr(self, "win_sound_played"):
+            del self.win_sound_played  # Resetear para permitir el sonido de ganar en la próxima partida
 
 
 if __name__ == "__main__":
