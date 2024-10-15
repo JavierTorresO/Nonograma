@@ -38,34 +38,11 @@ class Tablero:
                 text_surface = font.render(str(numero), True, NEGRO)
                 screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, 10 + (k * 30)))
 
-        for fila in range(self.rows):
+        for fila in range(self.rows):  # dibujar las celdas
             for columna in range(self.cols):
-                color = (
-                    DARK_GRAY
-                    if self.cells[fila][columna].is_filled
-                    else (255, 255, 255)
-                )
-                pygame.draw.rect(
-                    screen,
-                    color,
-                    [
-                        (start_x + columna * CELDA_SIZE),
-                        (start_y + fila * CELDA_SIZE),
-                        CELDA_SIZE,
-                        CELDA_SIZE,
-                    ],
-                )
-                pygame.draw.rect(
-                    screen,
-                    NEGRO,
-                    [
-                        (start_x + columna * CELDA_SIZE),
-                        (start_y + fila * CELDA_SIZE),
-                        CELDA_SIZE,
-                        CELDA_SIZE,
-                    ],
-                    1,
-                )
+                color = (DARK_GRAY if self.cells[fila][columna].is_filled else (255, 255, 255))
+                pygame.draw.rect(screen, color, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE])
+                pygame.draw.rect(screen, NEGRO, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE] , 1)
 
     def get_cell(self, pos):
         x, y = pos

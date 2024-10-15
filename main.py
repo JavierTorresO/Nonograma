@@ -19,26 +19,35 @@ class Main:
         pygame.mixer.init()  # Inicializar el mixer de Pygame
 
         # Cargar sonidos
-        self.sound_click = pygame.mixer.Sound("click-sound.mp3")  #al hacer clic en una celda
-        self.sound_win = pygame.mixer.Sound("win-sound.mp3")  #al ganar el juego
+        self.sound_click = pygame.mixer.Sound("click-sound.mp3")  # al hacer clic en una celda
+        self.sound_win = pygame.mixer.Sound("win-sound.mp3")  # al ganar el juego
 
-        self.window = Ventana(600, 400)
-        self.rows, self.cols = mostrar_menu(self.window.screen)  # Muestra el menu y tamaño del tablero
+        self.window = Ventana(400, 400)
+        self.rows, self.cols = mostrar_menu(pygame.display.get_surface())  # Muestra el menu y tamaño del tablero
+
+        self.window = Ventana(*self.calcularTamañoVentana(self.rows, self.cols))
+
         self.hints = (
             [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],  # Pistas horizontales
-            [[2], [1, 1], [1, 1], [1, 1], [2]]  # Pistas verticales
+            [[2], [1, 1], [1, 1], [1, 1], [2]],  # Pistas verticales
         )
         self.solution = [
             [0, 1, 0, 1, 0],
             [1, 0, 1, 0, 1],
             [1, 0, 0, 0, 1],
             [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0]
+            [0, 0, 1, 0, 0],
         ]  # Tablero solucion
+
         self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
         self.running = True
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
+
+    def calcularTamañoVentana(self, rows, cols):
+        ancho = MARGIN + 100 + (cols * CELDA_SIZE) + MARGIN
+        alto = MARGIN + 50 + (rows * CELDA_SIZE) + MARGIN
+        return (ancho, alto)
 
     def run(self):
         while self.running:
@@ -50,7 +59,7 @@ class Main:
             self.board.draw(self.window.screen)
 
             if self.board.check_win():
-                font = pygame.font.SysFont('Comic Sans MS', 40)
+                font = pygame.font.SysFont("Comic Sans MS", 40)
                 win_text = font.render("¡Ganaste!", True, ROJO)
 
                 # Reproducir el sonido de ganar (solo una vez)
@@ -91,7 +100,7 @@ class Main:
         # Reiniciar el tablero con el nuevo tamano
         self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
         if hasattr(self, "win_sound_played"):
-            del self.win_sound_played  # Resetear para permitir el sonido de ganar en la próxima partida
+            del (self.win_sound_played)  # Resetear para permitir el sonido de ganar en la próxima partida
 
 
 if __name__ == "__main__":
