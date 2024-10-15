@@ -9,8 +9,6 @@ ROJO = (255, 0, 0)
 
 CELDA_SIZE = 30
 MARGIN = 40
-# ROWS, COLS = 5, 5
-
 
 class Tablero:
     def __init__(self, rows, cols, hints, solution):
@@ -19,6 +17,41 @@ class Tablero:
         self.cells = [[Celda((x, y)) for y in range(cols)] for x in range(rows)]
         self.hints = hints
         self.solution = solution
+
+    @classmethod
+    def crear_tablero_chico(cls):
+        hints = (
+            [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],  # Pistas horizontales
+            [[2], [1, 1], [1, 1], [1, 1], [2]],  # Pistas verticales
+        )
+        solution = [
+            [0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 1],
+            [0, 1, 0, 1, 0],
+            [0, 0, 1, 0, 0],
+        ]
+        return cls(5, 5, hints, solution)
+
+    @classmethod
+    def crear_tablero_grande(cls):
+        hints = (
+            [[1, 1, 1, 1], [1, 1, 1], [2], [1, 1, 1], [1, 1]],  # Pistas horizontales
+            [[2], [1, 1, 1, 1], [1], [1, 1], [2]],  # Pistas verticales
+        )
+        solution = [
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+        ]
+        return cls(10, 10, hints, solution)
 
     def draw(self, screen):
         start_x = MARGIN + 100
@@ -42,7 +75,7 @@ class Tablero:
             for columna in range(self.cols):
                 color = (DARK_GRAY if self.cells[fila][columna].is_filled else (255, 255, 255))
                 pygame.draw.rect(screen, color, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE])
-                pygame.draw.rect(screen, NEGRO, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE] , 1)
+                pygame.draw.rect(screen, NEGRO, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE], 1)
 
     def get_cell(self, pos):
         x, y = pos
