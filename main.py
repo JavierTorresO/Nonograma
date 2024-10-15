@@ -22,9 +22,10 @@ class Main:
         self.sound_click = pygame.mixer.Sound("click-sound.mp3")  # al hacer clic en una celda
         self.sound_win = pygame.mixer.Sound("win-sound.mp3")  # al ganar el juego
 
-        self.window = Ventana(400, 400)
+        self.window = Ventana(1000, 800)
         self.rows, self.cols = mostrar_menu(pygame.display.get_surface())  # Muestra el menu y tamaño del tablero
 
+        # Ajustar tamaño de la ventana según el tamaño del tablero
         self.window = Ventana(*self.calcularTamañoVentana(self.rows, self.cols))
 
         self.hints = (
@@ -45,6 +46,7 @@ class Main:
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
 
     def calcularTamañoVentana(self, rows, cols):
+        # Calcula el ancho y alto dinámicamente basándose en el tamaño del tablero
         ancho = MARGIN + 100 + (cols * CELDA_SIZE) + MARGIN
         alto = MARGIN + 50 + (rows * CELDA_SIZE) + MARGIN
         return (ancho, alto)
@@ -53,8 +55,6 @@ class Main:
         while self.running:
             self.handle_events()
             self.window.screen.fill((255, 255, 255))
-
-            pygame.draw.rect(self.window.screen, (220, 220, 220), (MARGIN - 10, MARGIN - 10, 500, 300))
 
             self.board.draw(self.window.screen)
 
@@ -95,12 +95,20 @@ class Main:
                     self.return_to_menu()  # Volver al menu cuando se presiona Escape
 
     def return_to_menu(self):
-        # Volver al menu de seleccion
+        # Volver al menú de selección de tamaño de tablero
         self.rows, self.cols = mostrar_menu(self.window.screen)
-        # Reiniciar el tablero con el nuevo tamano
+
+        # Redimensionar la ventana al tamaño original del menú (800x600, por ejemplo)
+        MENU_ANCHO = 1000  # Tamaño predeterminado de ancho del menú
+        MENU_ALTO = 800  # Tamaño predeterminado de alto del menú
+        self.window = Ventana(MENU_ANCHO, MENU_ALTO)
+
+        # Reiniciar el tablero con el nuevo tamaño
         self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
+
+        # Resetear el sonido de ganar para permitir que suene nuevamente en la próxima partida
         if hasattr(self, "win_sound_played"):
-            del (self.win_sound_played)  # Resetear para permitir el sonido de ganar en la próxima partida
+            del self.win_sound_played
 
 
 if __name__ == "__main__":
