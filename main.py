@@ -67,16 +67,22 @@ class Main:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    pos = ((event.pos[0] - (MARGIN + 100)) // CELDA_SIZE, (event.pos[1] - (MARGIN + 50)) // CELDA_SIZE)
-                    cell = self.board.get_cell(pos)
-                    if cell:
-                        cell.toggle()
+                    pos_x = (event.pos[0] - (MARGIN + 100)) // CELDA_SIZE
+                    pos_y = (event.pos[1] - (MARGIN + 100)) // CELDA_SIZE
+                    pos = (pos_x, pos_y)
+                
+                    # Posicion del mouse
+                    if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
+                        cell = self.board.get_cell(pos)
+                        if cell:
+                            cell.toggle()
 
-                        # Reproducir el sonido de clic en la celda
-                        pygame.mixer.Sound.play(self.sound_click)
+                            # Reproducir el sonido de clic en la celda
+                            pygame.mixer.Sound.play(self.sound_click)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.return_to_menu()  # Volver al menu cuando se presiona Escape
+                    self.return_to_menu()  #  Volver al menu cuando se presiona Escape
+
 
     def return_to_menu(self):
         # Volver al menu de seleccion
