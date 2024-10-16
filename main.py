@@ -1,7 +1,7 @@
 import pygame
-from Tablero import Tablero
+from Tablero import Tablero 
 from Ventana import Ventana
-from menu import mostrar_menu
+from menu import mostrar_menu_size
 
 # Tamaños
 CELDA_SIZE = 30
@@ -23,24 +23,11 @@ class Main:
         self.sound_click = pygame.mixer.Sound("click-sound.mp3")  # al hacer clic en una celda
         self.sound_win = pygame.mixer.Sound("win-sound.mp3")  # al ganar el juego
 
+        
         self.screen = pygame.display.set_mode((400, 400))
-        self.rows, self.cols = mostrar_menu(pygame.display.get_surface())  # Muestra el menu y tamaño del tablero
-
+        self.rows , self.cols, self.tipo = mostrar_menu_size(pygame.display.get_surface())
+        self.board = Tablero(self.rows , self.cols, self.tipo)
         self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE)
-
-        self.hints = (
-            [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],  # Pistas horizontales
-            [[2], [1, 1], [1, 1], [1, 1], [2]],  # Pistas verticales
-        )
-        self.solution = [
-            [0, 1, 0, 1, 0],
-            [1, 0, 1, 0, 1],
-            [1, 0, 0, 0, 1],
-            [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0],
-        ]  # Tablero solucion
-
-        self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
         self.running = True
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
@@ -69,9 +56,9 @@ class Main:
                 self.bounce_offset += self.bounce_direction * 1.2
                 if abs(self.bounce_offset) >= 6:  # Cambiar direccion
                     self.bounce_direction *= -1
+
                 # Posicion del texto
                 x, y = pygame.display.get_surface().get_size()
-                print(x,y)
                 self.window.screen.blit(win_text, (x/2-80, y/2-40))
 
             self.window.update()
@@ -96,10 +83,10 @@ class Main:
     def return_to_menu(self):
         # Volver al menu de seleccion
         self.screen = pygame.display.set_mode((400, 400))
-        self.rows, self.cols = mostrar_menu(self.window.screen)
+        self.rows, self.cols, self.tipo = mostrar_menu_size(self.window.screen)
         self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE)
         # Reiniciar el tablero con el nuevo tamano
-        self.board = Tablero(self.rows, self.cols, self.hints, self.solution)
+        self.board = Tablero(self.rows, self.cols, self.tipo)
         if hasattr(self, "win_sound_played"):
             del (self.win_sound_played)  # Resetear para permitir el sonido de ganar en la próxima partida
 
