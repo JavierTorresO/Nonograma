@@ -36,7 +36,7 @@ class Tablero:
     @classmethod
     def crear_tablero_grande(cls):
         hints = (
-            [[4], [6], [8], [10], [1, 2, 1], [1, 2, 1], [8], [3, 3], [3, 3], [3, 3]],  # Pistas horizontales
+            [[4], [6], [8], [10], [1, 2, 1], [1, 2, 1], [8], [8], [3, 3], [3, 3]],  # Pistas horizontales
             [[1], [8], [4, 3], [4, 4], [7], [7], [4, 4], [4, 3], [8], [1]],  # Pistas verticales
         )
         solution = [
