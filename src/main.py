@@ -20,9 +20,8 @@ class Main:
         pygame.init()
 
         # Cargar sonidos
-        self.sound_click = pygame.mixer.Sound("click-sound.mp3")  # al hacer clic en una celda
-        self.sound_win = pygame.mixer.Sound("win-sound.mp3")  # al ganar el juego
-
+        self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
+        self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")  # al ganar el juego
         
         self.screen = pygame.display.set_mode((400, 400))
         self.rows , self.cols, self.tipo = mostrar_menu_size(pygame.display.get_surface())
