@@ -39,8 +39,6 @@ class Main:
             self.handle_events()
             self.window.screen.fill((255, 255, 255))
 
-            pygame.draw.rect(self.window.screen, (220, 220, 220), (MARGIN - 10, MARGIN - 10, 500, 300))
-
             self.board.draw(self.window.screen)
 
             if self.board.check_win():
