@@ -1,5 +1,5 @@
 import pygame
-from .Celda import Celda
+from Celda import Celda
 
 NEGRO = (0, 0, 0)
 GRIS = (200, 200, 200)
