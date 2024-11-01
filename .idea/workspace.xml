@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/menu.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JavierTorresO&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JavierTorresO/Nonograma.git&quot;,
+    &quot;accountId&quot;: &quot;10356a09-1351-4e67-9f81-087eec9bcb69&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2mrRQgmAhCvfx4R3P3uRGjpUMF4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Tablero.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/Javierbranch",
+    "last_opened_file_path": "C:/Users/javit/PycharmProjects/pythonProject/Nonograma/src/main.py"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": []
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Nonograma" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-884f5ed5d46b-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="" />
+      <created>1727832693970</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727832693970</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Prueba inicial">
+      <option name="closed" value="true" />
+      <created>1727832895976</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727832895976</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test">
+      <option name="closed" value="true" />
+      <created>1728851816940</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728851816940</updated>
+    </task>
+    <task id="LOCAL-00003" summary="remove enter">
+      <option name="closed" value="true" />
+      <created>1728852581428</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728852581428</updated>
+    </task>
+    <task id="LOCAL-00004" summary="agregar sonidos de interaccion y de ganador">
+      <option name="closed" value="true" />
+      <created>1728862307483</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728862307483</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: Mejora de visualizacion segun el tamaño del tablero seleccionado">
+      <option name="closed" value="true" />
+      <created>1729019868495</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729019868495</updated>
+    </task>
+    <task id="LOCAL-00006" summary="-Modificacion de tamaño de ventana: ahora es fija siempre&#10;-Eliminacion de tablero dinamico, mejor funciones individuales para cada tamaño de tablero">
+      <option name="closed" value="true" />
+      <created>1729021952971</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729021952971</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Tableros de prueba:&#10;-5x5: corazon -&gt; FUNCIONA&#10;-10x10: casa -&gt; FUNCIONA">
+      <option name="closed" value="true" />
+      <created>1729023063883</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729023063883</updated>
+    </task>
+    <task id="LOCAL-00008" summary="arreglo de ejemplo 10x10">
+      <option name="closed" value="true" />
+      <created>1729037357792</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1729037357792</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Ejemplos para tablero 5x5&#10;Ejemplos para tablero 10x10&#10;Eliminacion de rectangulo del fondo">
+      <option name="closed" value="true" />
+      <created>1729041849320</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1729041849320</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Ejemplos tableros 15x15 -&gt; FUNCIONAN">
+      <option name="closed" value="true" />
+      <created>1729047556794</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1729047556795</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Ejemplos de tablero 20x20 -&gt; FUNCIONAN">
+      <option name="closed" value="true" />
+      <created>1729056952725</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1729056952725</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Feat: Arreglar impresion de pistas superiores">
+      <option name="closed" value="true" />
+      <created>1729108055459</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1729108055459</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/feature/mas-nanogramas" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feature/Javierbranch" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Prueba inicial" />
+    <MESSAGE value="test" />
+    <MESSAGE value="remove enter" />
+    <MESSAGE value="agregar sonidos de interaccion y de ganador" />
+    <MESSAGE value="feat: Mejora de visualizacion segun el tamaño del tablero seleccionado" />
+    <MESSAGE value="-Modificacion de tamaño de ventana: ahora es fija siempre&#10;-Eliminacion de tablero dinamico, mejor funciones individuales para cada tamaño de tablero" />
+    <MESSAGE value="Tableros de prueba:&#10;-5x5: corazon -&gt; FUNCIONA&#10;-10x10: casa -&gt; FUNCIONA" />
+    <MESSAGE value="arreglo de ejemplo 10x10" />
+    <MESSAGE value="Ejemplos para tablero 5x5&#10;Ejemplos para tablero 10x10&#10;Eliminacion de rectangulo del fondo" />
+    <MESSAGE value="Ejemplos tableros 15x15 -&gt; FUNCIONAN" />
+    <MESSAGE value="Ejemplos de tablero 20x20 -&gt; FUNCIONAN" />
+    <MESSAGE value="Feat: Arreglar impresion de pistas superiores" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Arreglar impresion de pistas superiores" />
+  </component>
+</project>

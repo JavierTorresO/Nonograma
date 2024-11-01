@@ -4,46 +4,51 @@ import sys
 # Colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
-ROJO = (255, 0, 0)
+COLOR_SELECC = (255, 215, 0)
+COLOR_FONDO = (255, 250, 205)
 pantalla = None
+
 
 def mostrar_menu_size(screen):
     global pantalla
     pantalla = screen
     seleccion = 0
+    tipo=0
     pygame.display.set_caption('Seleccione el tablero.')
 
-    font = pygame.font.SysFont('Comic Sans MS', 30)
+    font = pygame.font.SysFont('Comic Sans MS', 40)
 
     # Opciones de tamaño
     opciones = ['5x5', '10x10', '15x15', '20x20', 'Salir']
-    
-    # lista de rectangulos de posicion del texto de los tamañaos
+
+    # lista de rectángulos de posición del texto de los tamaños
     option_rects = []
 
     while True:
-        screen.fill(BLANCO)
+        screen.fill(COLOR_FONDO)
 
         # posicion del mouse
         mouse_pos = pygame.mouse.get_pos()
 
         option_rects.clear()  # Limpiar la lista en cada frame
         for i, opcion in enumerate(opciones):
+            # Crear fondo para la opción seleccionada
             if i == seleccion:
-                color = ROJO  # Color rojo para la opcion seleccionada con las teclas
+                pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo rojo para opción seleccionada
+                color = BLANCO  # Cambia el color del texto a blanco
             else:
                 color = NEGRO
 
             # Renderizar el texto
             text_surface = font.render(opcion, True, color)
 
-            # Obtener la posicion del rectangulo del texto 
-            text_rect = text_surface.get_rect(topleft=(100, 100 + i * 50))
+            # Obtener la posición del rectángulo del texto
+            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # centrado en el eje X
             option_rects.append(text_rect)
 
+            # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                text_surface = font.render(opcion, True, ROJO)  # Color rojo si el mouse está sobre la opcion
-                seleccion = i 
+                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect)
 
@@ -56,7 +61,7 @@ def mostrar_menu_size(screen):
                 pygame.quit()
                 sys.exit()
 
-            # Movimiento de las teclas
+            # Para funcionar con las flechas, enter y escape
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
@@ -67,57 +72,58 @@ def mostrar_menu_size(screen):
 
             # Detectar click del mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  
+                if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
-                            return seleccionar_opcion(i)  
+                            return seleccionar_opcion(i)
 
 
-# Muestra el menu de seleccion de tipo de tablero
 def mostrar_menu_type(screen):
     tipo = 0
     pygame.display.set_caption('Seleccione el tipo de tablero.')
-    font = pygame.font.SysFont('Comic Sans MS', 30)
+    font = pygame.font.SysFont('Comic Sans MS', 40)
 
     # Opciones de tipo
     opciones = ['Nanograma 1', 'Nanograma 2', 'Volver']
     option_rects = []
-    
+
     while True:
-        screen.fill(BLANCO)
+        screen.fill(COLOR_FONDO)
 
         # posicion del mouse
         mouse_pos = pygame.mouse.get_pos()
 
         option_rects.clear()  # Limpiar la lista en cada frame
         for i, opcion in enumerate(opciones):
+            # Crear fondo para la opción seleccionada
             if i == tipo:
-                color = ROJO  # Color rojo para la opcion seleccionada con las teclas
+                pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo COLOR_SELECC para opción seleccionada
+                color = BLANCO  # Cambia el color del texto a blanco
             else:
                 color = NEGRO
 
             # Renderizar el texto
             text_surface = font.render(opcion, True, color)
 
-            # Obtener la posicion del rectangulo del texto 
-            text_rect = text_surface.get_rect(topleft=(100, 100 + i * 50))
+            # Obtener la posición del rectángulo del texto
+            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # Centrado en el eje X
             option_rects.append(text_rect)
 
+            # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                text_surface = font.render(opcion, True, ROJO)  # Color rojo si el mouse está sobre la opcion
-                tipo = i 
+                tipo = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect)
 
         pygame.display.flip()
-         # Manejar eventos
+        # Manejar eventos
         for event in pygame.event.get():
             # Salir al apretar boton de cierre
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            # Movimiento de las teclas
+            # # Para funcionar con las flechas, enter y escape
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     tipo = (tipo + 1) % len(opciones)
@@ -135,7 +141,7 @@ def mostrar_menu_type(screen):
 
             # Detectar click del mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  
+                if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
                             if i == 0:
@@ -144,8 +150,6 @@ def mostrar_menu_type(screen):
                                 return 2
                             else:
                                 mostrar_menu_size(screen)
-                
-
 
 
 # Retorna el tamaño del tablero segun la opcion seleccionada
