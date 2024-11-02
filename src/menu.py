@@ -33,14 +33,17 @@ def mostrar_menu_size(screen):
         option_rects.clear()  # Limpiar la lista en cada frame
         for i, opcion in enumerate(opciones):
             # Crear fondo para la opción seleccionada
+            rect = pygame.Rect(100, 100 + i * 50, 200, 40)
             if i == seleccion:
-                pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo rojo para opción seleccionada
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo rojo para opción seleccionada
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
+                pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
                 color = NEGRO
 
             # Renderizar el texto
             text_surface = font.render(opcion, True, color)
+
 
             # Obtener la posición del rectángulo del texto
             text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # centrado en el eje X
@@ -95,11 +98,14 @@ def mostrar_menu_type(screen):
 
         option_rects.clear()  # Limpiar la lista en cada frame
         for i, opcion in enumerate(opciones):
+            rect = pygame.Rect(100, 100 + i * 50, 200, 40)
             # Crear fondo para la opción seleccionada
             if i == tipo:
-                pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo COLOR_SELECC para opción seleccionada
+               # pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo COLOR_SELECC para opción seleccionada
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo COLOR_SELECC para opción seleccionada
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
+                pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
                 color = NEGRO
 
             # Renderizar el texto
