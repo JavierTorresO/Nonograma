@@ -22,6 +22,7 @@ class Main:
         # Cargar sonidos
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
         self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")  # al ganar el juego
+        self.sound_board_ready = pygame.mixer.Sound("assets/sonidos/boardReady.mp3") # al iniciar el tablero
         
         self.screen = pygame.display.set_mode((400, 400))
         self.rows , self.cols, self.tipo = mostrar_menu_size(pygame.display.get_surface())
@@ -31,6 +32,8 @@ class Main:
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
 
+        # Reproducir el sonido de tablero listo
+        pygame.mixer.Sound.play(self.sound_board_ready)
     
 
     def run(self):
