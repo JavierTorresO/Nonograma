@@ -12,7 +12,7 @@ NEGRO = (0, 0, 0)
 GRIS = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 ROJO = (255, 0, 0)
-
+BEIGE = (160, 121, 95)
 
 class Main:
     def __init__(self):
@@ -23,6 +23,9 @@ class Main:
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
         self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")  # al ganar el juego
         self.sound_board_ready = pygame.mixer.Sound("assets/sonidos/boardReady.mp3") # al iniciar el tablero
+
+        # Cargar Imagen
+        self.background_image = pygame.image.load("assets/imagen/background2.jpg") 
         
         self.screen = pygame.display.set_mode((400, 400))
         self.rows , self.cols, self.tipo = mostrar_menu_size(pygame.display.get_surface())
@@ -39,7 +42,11 @@ class Main:
     def run(self):
         while self.running:
             self.handle_events()
-            self.window.screen.fill((255, 255, 255))
+
+            background_ancho, background_alto = self.screen.get_size()  # Obtener el tamaño de la pantalla
+            scaled_background = pygame.transform.scale(self.background_image, (background_ancho, background_alto))  # Escalar imagen
+
+            self.screen.blit(scaled_background, (0, 0))
 
             self.board.draw(self.window.screen)
 

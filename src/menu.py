@@ -4,7 +4,7 @@ import sys
 # Colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
-COLOR_SELECC = (255, 215, 0)
+COLOR_SELECC = (160, 121, 95)
 COLOR_FONDO = (255, 250, 205)
 pantalla = None
 
@@ -101,7 +101,6 @@ def mostrar_menu_type(screen):
             rect = pygame.Rect(100, 100 + i * 50, 200, 40)
             # Crear fondo para la opción seleccionada
             if i == tipo:
-               # pygame.draw.rect(screen, COLOR_SELECC, (80, 100 + i * 50, 240, 40))  # Fondo COLOR_SELECC para opción seleccionada
                 pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo COLOR_SELECC para opción seleccionada
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
