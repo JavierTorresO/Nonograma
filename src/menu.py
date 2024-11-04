@@ -35,7 +35,7 @@ def mostrar_menu_size(screen):
             # Crear fondo para la opción seleccionada
             rect = pygame.Rect(100, 100 + i * 50, 200, 40)
             if i == seleccion:
-                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo rojo para opción seleccionada
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo color para opción seleccionada
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
                 pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
