@@ -61,12 +61,13 @@ class Main:
 
                 # Efecto de baile
                 self.bounce_offset += self.bounce_direction * 1.2
-                if abs(self.bounce_offset) >= 6:  # Cambiar direccion
+                if abs(self.bounce_offset) >= 6:  # Cambiar dirección
                     self.bounce_direction *= -1
 
-                # Posicion del texto
+                # Posición del texto con el efecto de baile
                 x, y = pygame.display.get_surface().get_size()
-                self.window.screen.blit(win_text, (x/2-80, y/2-40))
+                text_y_position = y / 2 - 40 + self.bounce_offset  # Ajustar la posición Y con el offset
+                self.window.screen.blit(win_text, (x / 2 - 80, text_y_position))
 
             self.window.update()
 
