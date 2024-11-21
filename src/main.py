@@ -72,11 +72,14 @@ class Main:
             self.window.update()
 
     def handle_events(self):
+        self.last_cell = None  # Almacena la última celda marcada
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Botón izquierdo del mouse
+                    self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_cell_click(event.pos)
             elif event.type == pygame.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo está presionado
@@ -92,13 +95,15 @@ class Main:
 
         # Verificar si el clic está dentro de los límites del tablero
         if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
-            cell = self.board.get_cell(pos)
-            if cell:
-                cell.toggle()
+            # Solo modificar si la celda es diferente a la última marcada
+            if pos != self.last_cell:
+                cell = self.board.get_cell(pos)
+                if cell:
+                    cell.toggle()
+                    self.last_cell = pos  # Actualizar la última celda marcada
 
-                # Reproducir el sonido de clic en la celda
-                pygame.mixer.Sound.play(self.sound_click)
-
+                    # Reproducir el sonido de clic en la celda
+                    pygame.mixer.Sound.play(self.sound_click)
 
     def return_to_menu(self):
         # Volver al menu de seleccion
