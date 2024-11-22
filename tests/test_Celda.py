@@ -12,7 +12,7 @@ class TestCelda(unittest.TestCase):
 
     def test_estado_inicial(self):
         """Probar que la celda empieza sin estar llena (is_filled == False)."""
-        self.assertFalse(self.celda.is_filled)
+        self.assertFalse(self.celda.is_painted)
 
     def test_posicion(self):
         """Probar que la posición de la celda es correcta."""

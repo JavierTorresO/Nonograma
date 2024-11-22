@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="Feat: reparacion en efecto de ganador">
+    <list default="true" id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="Feat: Refactor&#10;Actualizacion de clase Celda.&#10;Ahora cambia entre seleccionada o no seleccionada la X&#10;&#10;Actualizacion de clase Tablero.&#10;Ahora ya no se ocupa de manejar eventos de click, se actualizó &quot;draw&quot; para obtener el tamaño de la celda y dibujar la X en ella&#10;&#10;Actualizacion de la main.&#10;Añadimos una funcion especifica para manejar los eventos del click derecho, asi ahora todos los eventos se manejan en la main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Celda.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Celda.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tablero.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tablero.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/TestX.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestX.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_Celda.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_Celda.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +26,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -56,19 +61,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Tablero.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/javit/PycharmProjects/pythonProject/Nonograma/src/main.py&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for TestX.TestNonograma.test_mark_x_on_cell.executor": "Run",
+    "Python tests.Python tests for TestX.TestX.test_mark_x_on_cell.executor": "Run",
+    "Python tests.Python tests for TestX.TestX.test_prevent_paint_over_x.executor": "Run",
+    "Python.Tablero.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/Javierbranch",
+    "last_opened_file_path": "C:/Users/javit/PycharmProjects/pythonProject/Nonograma/src/main.py"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ChangesTree.GroupingKeys&quot;: []
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": []
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Nonograma" />
       <option name="ENV_FILES" value="" />
@@ -91,12 +99,57 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for TestX.TestNonograma.test_mark_x_on_cell" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Nonograma" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;TestX.TestNonograma.test_mark_x_on_cell&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for TestX.TestX.test_mark_x_on_cell" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Nonograma" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;TestX.TestX.test_mark_x_on_cell&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for TestX.TestX.test_prevent_paint_over_x" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Nonograma" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;TestX.TestX.test_prevent_paint_over_x&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.Python tests for TestX.TestX.test_prevent_paint_over_x" />
+        <item itemvalue="Python tests.Python tests for TestX.TestX.test_mark_x_on_cell" />
+        <item itemvalue="Python tests.Python tests for TestX.TestNonograma.test_mark_x_on_cell" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -229,7 +282,31 @@
       <option name="project" value="LOCAL" />
       <updated>1730732168263</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Feat: Test first&#10;Test para implementar las pistas(X) en el tablero con click derecho">
+      <option name="closed" value="true" />
+      <created>1732225374374</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1732225374374</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!">
+      <option name="closed" value="true" />
+      <created>1732244843328</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732244843328</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Feat: Refactor&#10;Actualizacion de clase Celda.&#10;Ahora cambia entre seleccionada o no seleccionada la X&#10;&#10;Actualizacion de clase Tablero.&#10;Ahora ya no se ocupa de manejar eventos de click, se actualizó &quot;draw&quot; para obtener el tamaño de la celda y dibujar la X en ella&#10;&#10;Actualizacion de la main.&#10;Añadimos una funcion especifica para manejar los eventos del click derecho, asi ahora todos los eventos se manejan en la main">
+      <option name="closed" value="true" />
+      <created>1732282036035</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1732282036035</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,6 +362,9 @@
     <MESSAGE value="Feat: Arreglar impresion de pistas superiores" />
     <MESSAGE value="Feat: edicion comentarios" />
     <MESSAGE value="Feat: reparacion en efecto de ganador" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: reparacion en efecto de ganador" />
+    <MESSAGE value="Feat: Test first&#10;Test para implementar las pistas(X) en el tablero con click derecho" />
+    <MESSAGE value="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!" />
+    <MESSAGE value="Feat: Refactor&#10;Actualizacion de clase Celda.&#10;Ahora cambia entre seleccionada o no seleccionada la X&#10;&#10;Actualizacion de clase Tablero.&#10;Ahora ya no se ocupa de manejar eventos de click, se actualizó &quot;draw&quot; para obtener el tamaño de la celda y dibujar la X en ella&#10;&#10;Actualizacion de la main.&#10;Añadimos una funcion especifica para manejar los eventos del click derecho, asi ahora todos los eventos se manejan en la main" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Refactor&#10;Actualizacion de clase Celda.&#10;Ahora cambia entre seleccionada o no seleccionada la X&#10;&#10;Actualizacion de clase Tablero.&#10;Ahora ya no se ocupa de manejar eventos de click, se actualizó &quot;draw&quot; para obtener el tamaño de la celda y dibujar la X en ella&#10;&#10;Actualizacion de la main.&#10;Añadimos una funcion especifica para manejar los eventos del click derecho, asi ahora todos los eventos se manejan en la main" />
   </component>
 </project>
