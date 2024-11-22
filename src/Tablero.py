@@ -1,5 +1,5 @@
 import pygame
-from .Celda import Celda
+from Celda import Celda
 
 NEGRO = (0, 0, 0)
 GRIS = (200, 200, 200)
@@ -37,11 +37,33 @@ class Tablero:
                 text_surface = font.render(str(numero), True, NEGRO)
                 screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, 10 + (k * 25)))
 
-        for fila in range(self.rows):  # dibujar las celdas
+        # Dibujar las celdas
+        for fila in range(self.rows):
             for columna in range(self.cols):
-                color = (DARK_GRAY if self.cells[fila][columna].is_filled else (255, 255, 255))
-                pygame.draw.rect(screen, color, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE])
-                pygame.draw.rect(screen, NEGRO, [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE, CELDA_SIZE] , 1)
+                # Obtener la celda actual
+                cell = self.cells[fila][columna]
+
+                # Determinar el color de la celda, solo si no está marcada con "X"
+                if cell.is_marked_x:
+                    BLANCO = (255, 255, 255)  # Siempre blanco si tiene la "X"
+                else:
+                    BLANCO = (DARK_GRAY if cell.is_filled else (255, 255, 255))  # Si no tiene "X", se pinta normalmente
+
+                pygame.draw.rect(screen, BLANCO,
+                                 [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE,
+                                  CELDA_SIZE])
+                pygame.draw.rect(screen, NEGRO,
+                                 [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE,
+                                  CELDA_SIZE], 1)
+
+                # Dibujar la X si la celda está marcada con una "X"
+                if cell.is_marked_x:
+                    pygame.draw.line(screen, NEGRO,
+                                     (start_x + columna * CELDA_SIZE, start_y + fila * CELDA_SIZE),
+                                     (start_x + (columna + 1) * CELDA_SIZE, start_y + (fila + 1) * CELDA_SIZE), 2)
+                    pygame.draw.line(screen, NEGRO,
+                                     (start_x + (columna + 1) * CELDA_SIZE, start_y + fila * CELDA_SIZE),
+                                     (start_x + columna * CELDA_SIZE, start_y + (fila + 1) * CELDA_SIZE), 2)
 
     def get_cell(self, pos):
         x, y = pos
@@ -53,17 +75,6 @@ class Tablero:
                 if self.cells[i][j].is_filled != self.solution[i][j]:
                     return False
         return True
-
-    def handle_right_click(self, pos):
-        fila, columna = pos
-        if not self.cells[fila][columna].is_filled:
-            self.cells[fila][columna].mark_x()
-
-    def handle_left_click(self, pos):
-        fila, columna = pos
-        if not self.cells[fila][columna].is_x:
-            self.cells[fila][columna].paint()
-
 
 def seleccionar_nanograma(rows, cols, tipo):
     if rows == 5 and cols == 5:

@@ -81,6 +81,8 @@ class Main:
                 if event.button == 1:  # Botón izquierdo del mouse
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_cell_click(event.pos)
+                elif event.button == 3:  # Botón derecho del mouse (clic para marcar X)
+                    self.handle_right_click(event.pos)
             elif event.type == pygame.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo está presionado
                     self.handle_cell_click(event.pos)
@@ -104,6 +106,18 @@ class Main:
 
                     # Reproducir el sonido de clic en la celda
                     pygame.mixer.Sound.play(self.sound_click)
+
+    def handle_right_click(self, mouse_pos):
+        pos_x = (mouse_pos[0] - (MARGIN + 100)) // CELDA_SIZE
+        pos_y = (mouse_pos[1] - (MARGIN + 100)) // CELDA_SIZE
+        pos = (pos_x, pos_y)
+
+        # Verificar si el clic está dentro de los límites del tablero
+        if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
+            cell = self.board.get_cell(pos)
+            if cell:
+                cell.toggle_x()  # Cambiar el estado de la celda a "X"
+                pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido de clic
 
     def return_to_menu(self):
         # Volver al menu de seleccion

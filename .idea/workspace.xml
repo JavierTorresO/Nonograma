@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="Feat: Test first&#10;Test para implementar las pistas(X) en el tablero con click derecho">
+    <list default="true" id="c78d511d-82a4-48cc-aaaa-69f04aec755a" name="Changes" comment="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Celda.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Celda.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tablero.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tablero.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/TestX.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestX.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +63,7 @@
   "keyToString": {
     "Python tests.Python tests for TestX.TestNonograma.test_mark_x_on_cell.executor": "Run",
     "Python tests.Python tests for TestX.TestX.test_mark_x_on_cell.executor": "Run",
+    "Python tests.Python tests for TestX.TestX.test_prevent_paint_over_x.executor": "Run",
     "Python.Tablero.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -73,7 +74,7 @@
     "ChangesTree.GroupingKeys": []
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for TestX.TestX.test_prevent_paint_over_x">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Nonograma" />
       <option name="ENV_FILES" value="" />
@@ -143,10 +144,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python tests.Python tests for TestX.TestX.test_prevent_paint_over_x" />
         <item itemvalue="Python tests.Python tests for TestX.TestX.test_mark_x_on_cell" />
         <item itemvalue="Python tests.Python tests for TestX.TestNonograma.test_mark_x_on_cell" />
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
@@ -287,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732225374374</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!">
+      <option name="closed" value="true" />
+      <created>1732244843328</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732244843328</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -344,6 +353,7 @@
     <MESSAGE value="Feat: edicion comentarios" />
     <MESSAGE value="Feat: reparacion en efecto de ganador" />
     <MESSAGE value="Feat: Test first&#10;Test para implementar las pistas(X) en el tablero con click derecho" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: Test first&#10;Test para implementar las pistas(X) en el tablero con click derecho" />
+    <MESSAGE value="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Make it pass&#10;Creacion de funciones para implementar pistas(X), ahora las pruebas pasan!!" />
   </component>
 </project>
