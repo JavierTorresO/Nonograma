@@ -4,11 +4,11 @@ import pygame
 from src.Tablero import Tablero
 
 
-class TestNonograma(unittest.TestCase):
+class TestX(unittest.TestCase):
     def setUp(self):
         #crear una instancia del tablero.
         pygame.init()
-        self.tablero = Tablero()
+        self.tablero = Tablero(rows=5, cols=5, tipo="normal")
         self.screen = pygame.display.set_mode((800, 600))
 
     def test_mark_x_on_cell(self):

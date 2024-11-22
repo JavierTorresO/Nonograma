@@ -1,5 +1,5 @@
 import pygame
-from Celda import Celda
+from .Celda import Celda
 
 NEGRO = (0, 0, 0)
 GRIS = (200, 200, 200)
@@ -53,6 +53,16 @@ class Tablero:
                 if self.cells[i][j].is_filled != self.solution[i][j]:
                     return False
         return True
+
+    def handle_right_click(self, pos):
+        fila, columna = pos
+        if not self.cells[fila][columna].is_filled:
+            self.cells[fila][columna].mark_x()
+
+    def handle_left_click(self, pos):
+        fila, columna = pos
+        if not self.cells[fila][columna].is_x:
+            self.cells[fila][columna].paint()
 
 
 def seleccionar_nanograma(rows, cols, tipo):
