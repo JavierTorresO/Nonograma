@@ -1,11 +1,12 @@
 class Celda:
     def __init__(self, position):
-        self.is_filled = False  # Celda activada
-        self.is_marked_x = False  # Estado de "X"
-        self.position = position
+        self.is_painted = False      # Indica si la celda está pintada
+        self.is_x = False           # Indica si la celda tiene una "X"
+        self.position = position    # Guarda la posición de la celda
 
     def toggle(self):
-        self.is_filled = not self.is_filled  # Cambia entre marcado y no marcado
+        self.is_painted = not self.is_painted #cambia una celda entre pintado-nopintado
 
     def toggle_x(self):
-        self.is_marked_x = not self.is_marked_x  # Cambia entre marcado con X y no marcado
+        self.is_x = not self.is_x #cambia el estado de la "X" en una celda
+

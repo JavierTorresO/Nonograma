@@ -2,6 +2,7 @@ import pygame
 from Celda import Celda
 
 NEGRO = (0, 0, 0)
+BLANCO=(255,255,255)
 GRIS = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 ROJO = (255, 0, 0)
@@ -43,27 +44,26 @@ class Tablero:
                 # Obtener la celda actual
                 cell = self.cells[fila][columna]
 
-                # Determinar el color de la celda, solo si no está marcada con "X"
-                if cell.is_marked_x:
-                    BLANCO = (255, 255, 255)  # Siempre blanco si tiene la "X"
+                # Calcular la posición de la celda
+                x = start_x + columna * CELDA_SIZE
+                y = start_y + fila * CELDA_SIZE
+
+                # Determinar el color de la celda
+                if cell.is_x:
+                    color = BLANCO
                 else:
-                    BLANCO = (DARK_GRAY if cell.is_filled else (255, 255, 255))  # Si no tiene "X", se pinta normalmente
+                    color = DARK_GRAY if cell.is_painted else BLANCO
 
-                pygame.draw.rect(screen, BLANCO,
-                                 [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE,
-                                  CELDA_SIZE])
-                pygame.draw.rect(screen, NEGRO,
-                                 [(start_x + columna * CELDA_SIZE), (start_y + fila * CELDA_SIZE), CELDA_SIZE,
-                                  CELDA_SIZE], 1)
+                # Dibujar el fondo de la celda
+                pygame.draw.rect(screen, color, [x, y, CELDA_SIZE, CELDA_SIZE])
 
-                # Dibujar la X si la celda está marcada con una "X"
-                if cell.is_marked_x:
-                    pygame.draw.line(screen, NEGRO,
-                                     (start_x + columna * CELDA_SIZE, start_y + fila * CELDA_SIZE),
-                                     (start_x + (columna + 1) * CELDA_SIZE, start_y + (fila + 1) * CELDA_SIZE), 2)
-                    pygame.draw.line(screen, NEGRO,
-                                     (start_x + (columna + 1) * CELDA_SIZE, start_y + fila * CELDA_SIZE),
-                                     (start_x + columna * CELDA_SIZE, start_y + (fila + 1) * CELDA_SIZE), 2)
+                # Dibujar el borde de la celda
+                pygame.draw.rect(screen, NEGRO, [x, y, CELDA_SIZE, CELDA_SIZE], 1)
+
+                # Dibujar la "X" si está marcada con una
+                if cell.is_x:
+                    pygame.draw.line(screen, NEGRO, (x, y), (x + CELDA_SIZE, y + CELDA_SIZE), 2)
+                    pygame.draw.line(screen, NEGRO, (x + CELDA_SIZE, y), (x, y + CELDA_SIZE), 2)
 
     def get_cell(self, pos):
         x, y = pos
@@ -72,7 +72,7 @@ class Tablero:
     def check_win(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                if self.cells[i][j].is_filled != self.solution[i][j]:
+                if self.cells[i][j].is_painted != self.solution[i][j]:
                     return False
         return True
 

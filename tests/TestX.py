@@ -27,7 +27,7 @@ class TestX(unittest.TestCase):
 
         # Intentar pintar sobre la celda marcada con "X".
         self.tablero.handle_left_click(pos)  # Método para pintar la celda
-        self.assertFalse(self.tablero.cells[2][3].is_filled)  # Asegurarse de que no se pintó
+        self.assertFalse(self.tablero.cells[2][3].is_painted)  # Asegurarse de que no se pintó
 
 if __name__ == '__main__':
     unittest.main()
