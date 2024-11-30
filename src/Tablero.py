@@ -34,9 +34,9 @@ class Tablero:
         # Dibujar pistas de las columnas
         for j, pista in enumerate(self.hints[1]):
             for k, numero in enumerate(pista):
-                font = pygame.font.SysFont("Comic Sans MS", 18)
+                font = pygame.font.SysFont("Comic Sans MS", 20)
                 text_surface = font.render(str(numero), True, NEGRO)
-                screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, 10 + (k * 25)))
+                screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, (k * 17)))
 
         # Dibujar las celdas
         for fila in range(self.rows):

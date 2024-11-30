@@ -61,7 +61,7 @@ class Main:
                         pygame.mixer.Sound.play(self.sound_win)
                         self.win_sound_played = True
 
-                font = pygame.font.SysFont("Comic Sans MS", 40)
+                font = pygame.font.SysFont("Comic Sans MS", 60)
                 win_text = font.render("¡Ganaste!", True, ROJO)
 
                 # Efecto de baile
@@ -71,13 +71,13 @@ class Main:
 
                 # Posicion del texto con el efecto de baile
                 x, y = pygame.display.get_surface().get_size()
-                text_y_position = y / 2 - 40 + self.bounce_offset  # Ajustar la posicion Y con el offset
-                self.window.screen.blit(win_text, (x / 2 - 80, text_y_position))
+                text_width, text_height = win_text.get_size()
+                self.window.screen.blit(win_text, (x / 2 - text_width / 2, y / 2 - text_height + self.bounce_offset))
 
                 # Verificar si han pasado 3 segundos desde la victoria
                 if pygame.time.get_ticks() - self.win_time >= 3000:
                     self.return_to_menu()  # Volver al menú despues de e segundos
-                    return # Salir del bucle
+
 
             self.window.update()
 
@@ -163,15 +163,23 @@ class Main:
                     cell.toggle_x()  # Alternar la "X"
                 pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido
 
+    # Volver al menu de seleccion
     def return_to_menu(self):
-        # Volver al menu de seleccion
+        self.win_time = None
+        self.win_sound_played = False
         self.screen = pygame.display.set_mode((400, 400))
         self.rows, self.cols, self.tipo = mostrar_menu_size(self.window.screen)
         self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE)
-        # Reiniciar el tablero con el nuevo tamano
         self.board = Tablero(self.rows, self.cols, self.tipo)
-        if hasattr(self, "win_sound_played"):
-            del (self.win_sound_played)  # Resetear para permitir el sonido de ganar en la próxima partida
+
+        # Recargar sonidos si es necesario
+        self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")
+        self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")
+        self.sound_board_ready = pygame.mixer.Sound("assets/sonidos/boardReady.mp3")
+
+        # Reproducir el sonido de tablero listo
+        pygame.mixer.Sound.play(self.sound_board_ready)
+
 
 
 if __name__ == "__main__":
