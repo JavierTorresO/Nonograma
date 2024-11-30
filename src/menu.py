@@ -13,10 +13,8 @@ def mostrar_menu_size(screen):
     global pantalla
     pantalla = screen
     seleccion = 0
-    tipo=0
-    pygame.display.set_caption('Seleccione el tablero.')
-
-    font = pygame.font.SysFont('Comic Sans MS', 40)
+    pygame.display.set_caption('Seleccione el tablero.') # nombre de la ventana
+    font = pygame.font.SysFont('Comic Sans MS', 40) # estilo de la fuente
 
     # Opciones de tamaño
     opciones = ['5x5', '10x10', '15x15', '20x20', 'Salir']
@@ -25,12 +23,10 @@ def mostrar_menu_size(screen):
     option_rects = []
 
     while True:
-        screen.fill(COLOR_FONDO)
-
-        # posicion del mouse
-        mouse_pos = pygame.mouse.get_pos()
-
+        screen.fill(COLOR_FONDO) # color del fondo 
+        mouse_pos = pygame.mouse.get_pos() # posicion del mouse 
         option_rects.clear()  # Limpiar la lista en cada frame
+
         for i, opcion in enumerate(opciones):
             # Crear fondo para la opción seleccionada
             rect = pygame.Rect(100, 100 + i * 50, 200, 40)
@@ -53,9 +49,9 @@ def mostrar_menu_size(screen):
             if text_rect.collidepoint(mouse_pos):
                 seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
-            screen.blit(text_surface, text_rect)
+            screen.blit(text_surface, text_rect) # renderiza el texto
 
-        pygame.display.flip()
+        pygame.display.flip() # actiualiza la pantalla para mostrar los cambios en este frame
 
         # Manejar eventos
         for event in pygame.event.get():
@@ -83,22 +79,21 @@ def mostrar_menu_size(screen):
 
 def mostrar_menu_type(screen):
     tipo = 0
-    pygame.display.set_caption('Seleccione el tipo de tablero.')
-    font = pygame.font.SysFont('Comic Sans MS', 40)
+    pygame.display.set_caption('Seleccione el tipo de tablero.') # Nombre de la ventana
+    font = pygame.font.SysFont('Comic Sans MS', 40) # Estilo de la fuente
 
     # Opciones de tipo
     opciones = ['Nanograma 1', 'Nanograma 2', 'Volver']
     option_rects = []
 
     while True:
-        screen.fill(COLOR_FONDO)
-
-        # posicion del mouse
-        mouse_pos = pygame.mouse.get_pos()
-
+        screen.fill(COLOR_FONDO) # Color del fondo
+        mouse_pos = pygame.mouse.get_pos() # posicion del mouse
         option_rects.clear()  # Limpiar la lista en cada frame
+
         for i, opcion in enumerate(opciones):
-            rect = pygame.Rect(100, 100 + i * 50, 200, 40)
+            rect = pygame.Rect(65, 105 + i * 50, 270, 40)
+            
             # Crear fondo para la opción seleccionada
             if i == tipo:
                 pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo COLOR_SELECC para opción seleccionada
@@ -112,15 +107,16 @@ def mostrar_menu_type(screen):
 
             # Obtener la posición del rectángulo del texto
             text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # Centrado en el eje X
+            
             option_rects.append(text_rect)
 
             # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
                 tipo = i  # Cambia la opción seleccionada al pasar el mouse
 
-            screen.blit(text_surface, text_rect)
+            screen.blit(text_surface, text_rect) # renderizar
 
-        pygame.display.flip()
+        pygame.display.flip() # actualizar
         # Manejar eventos
         for event in pygame.event.get():
             # Salir al apretar boton de cierre

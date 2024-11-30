@@ -81,8 +81,6 @@ class Main:
                 if event.button == 1:  # Botón izquierdo del mouse
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_cell_click(event.pos)
-                elif event.button == 3:  # Botón derecho del mouse (clic para marcar X)
-                    self.handle_right_click(event.pos)
             elif event.type == pygame.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo está presionado
                     self.handle_cell_click(event.pos)
@@ -97,27 +95,15 @@ class Main:
 
         # Verificar si el clic está dentro de los límites del tablero
         if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
-            if pos != self.last_cell:  # Solo modificar si la celda es diferente a la última marcada
+            # Solo modificar si la celda es diferente a la última marcada
+            if pos != self.last_cell:
                 cell = self.board.get_cell(pos)
                 if cell:
-                    if not cell.is_x:  # No permitir pintar si la celda tiene una "X"
-                        cell.toggle()  # Pintar la celda si no tiene "X"
-                        self.last_cell = pos  # Actualizar la última celda marcada
-                        pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido
+                    cell.toggle()
+                    self.last_cell = pos  # Actualizar la última celda marcada
 
-    def handle_right_click(self, mouse_pos):
-        pos_x = (mouse_pos[0] - (MARGIN + 100)) // CELDA_SIZE
-        pos_y = (mouse_pos[1] - (MARGIN + 100)) // CELDA_SIZE
-        pos = (pos_x, pos_y)
-
-        if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
-            cell = self.board.get_cell(pos)
-            if cell:
-                if cell.is_painted:  # Si la celda está pintada, despintarla
-                    cell.is_painted = False  # Quitar la pintura
-                else:
-                    cell.toggle_x()  # Alternar la "X"
-                pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido
+                    # Reproducir el sonido de clic en la celda
+                    pygame.mixer.Sound.play(self.sound_click)
 
     def return_to_menu(self):
         # Volver al menu de seleccion
