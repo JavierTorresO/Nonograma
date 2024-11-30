@@ -25,6 +25,7 @@ class Main:
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
         self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")  # al ganar el juego
         self.sound_board_ready = pygame.mixer.Sound("assets/sonidos/boardReady.mp3") # al iniciar el tablero
+        self.sound_resetbutton = pygame.mixer.Sound("assets/sonidos/resetbutton.mp3") # click en boton de restear el tablero
 
         # Cargar Imagen
         self.background_image = pygame.image.load("assets/imagen/background2.jpg") 
@@ -41,6 +42,17 @@ class Main:
 
         # Reproducir el sonido de tablero listo
         pygame.mixer.Sound.play(self.sound_board_ready)
+
+        # Boton de reinicio
+        self.reset_button = pygame.Rect(6, 10, 90, 30) # Posicion y tamaño del boton
+
+    def draw_reset_button(self):
+        pygame.draw.rect(self.window.screen, BEIGE, self.reset_button, border_radius=10)  # Dibujar el botón
+        font = pygame.font.SysFont("Comic Sans MS", 20)
+        text = font.render("Reiniciar", True, NEGRO)
+        text_rect = text.get_rect(center = self.reset_button.center)
+        self.window.screen.blit(text, (10,10))
+
     
 
     def run(self):
@@ -53,6 +65,7 @@ class Main:
             self.screen.blit(scaled_background, (0, 0))
 
             self.board.draw(self.window.screen)
+            self.draw_reset_button() # Dibuja el boton de reinicio
 
             if self.board.check_win():
                 if not self.win_time:
@@ -91,9 +104,13 @@ class Main:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Boton izquierdo del mouse
-                    self.last_cell = None  # Reiniciar al iniciar un nuevo clic
-                    self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
-                    self.handle_cell_click(event.pos, lock=True)
+                    if self.reset_button.collidepoint(event.pos): # Si se hace clic en el botón de reinicio
+                        pygame.mixer.Sound.play(self.sound_resetbutton)
+                        self.reset_buttontab() # Reiniciar el tablero
+                    else:
+                        self.last_cell = None  # Reiniciar al iniciar un nuevo clic
+                        self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
+                        self.handle_cell_click(event.pos, lock=True)
                 elif event.button == 3:  # Botón derecho del mouse (clic para marcar X)
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_right_click(event.pos)
@@ -180,6 +197,13 @@ class Main:
         # Reproducir el sonido de tablero listo
         pygame.mixer.Sound.play(self.sound_board_ready)
 
+    # Reiniciar el tablero
+    def reset_buttontab(self):
+        for row in self.board.cells:
+            for cell in row:
+                cell.is_painted = False
+                cell.is_locked = False
+                cell.is_x = False
 
 
 if __name__ == "__main__":
