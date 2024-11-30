@@ -5,7 +5,7 @@ from menu import mostrar_menu_home
 
 # Tamaños
 CELDA_SIZE = 30
-MARGIN = 40
+MARGIN = 50
 
 # Colores
 NEGRO = (0, 0, 0)
@@ -32,9 +32,9 @@ class Main:
         self.background_image = pygame.image.load("assets/imagen/background2.jpg") 
         
         self.screen = pygame.display.set_mode((400, 400))  # crea una ventana inicial para el juego  
-        self.rows , self.cols, self.tipo = mostrar_menu_home(pygame.display.get_surface())  # nos muestra las opciones y nos devuelve las filas, columnas y cual nanograma elejimos
-        self.board = Tablero(self.rows , self.cols, self.tipo) # tablero recupera las pistas y la solucion del nanograma que elejimos y crea el tablero de juego
-        self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE) # crea la ventana de juego segun el nanograma elejido
+        self.rows , self.cols, self.tipo, self.mode = mostrar_menu_home(pygame.display.get_surface())  # nos muestra las opciones y nos devuelve las filas, columnas y cual nanograma elejimos
+        self.board = Tablero(self.rows , self.cols, self.tipo, self.mode) # tablero recupera las pistas y la solucion del nanograma que elejimos y crea el tablero de juego
+        self.window = Ventana(self.rows, self.cols, self.mode, MARGIN, CELDA_SIZE) # crea la ventana de juego segun el nanograma elejido
         self.running = True
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
@@ -170,9 +170,9 @@ class Main:
         self.win_time = None
         self.win_sound_played = False
         self.screen = pygame.display.set_mode((400, 400))
-        self.rows, self.cols, self.tipo = mostrar_menu_home(self.window.screen)
-        self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE)
-        self.board = Tablero(self.rows, self.cols, self.tipo)
+        self.rows, self.cols, self.tipo, self.mode = mostrar_menu_home(self.window.screen)
+        self.window = Ventana(self.rows, self.cols, self.mode, MARGIN, CELDA_SIZE)
+        self.board = Tablero(self.rows, self.cols, self.tipo, self.mode)
 
         # Recargar sonidos si es necesario
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")
