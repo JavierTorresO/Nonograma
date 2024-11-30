@@ -10,7 +10,3 @@ class Celda:
 
     def toggle_x(self):
         self.is_x = not self.is_x #cambia el estado de la "X" en una celda
-
-    # def hold(self):
-    #     if not self.is_painted:
-    #         self.is_painted = True  # Marca la celda si no está ya marcada

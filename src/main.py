@@ -1,7 +1,7 @@
 import pygame
 from Tablero import Tablero 
 from Ventana import Ventana
-from menu import mostrar_menu_size
+from menu import mostrar_menu_home
 
 # Tamaños
 CELDA_SIZE = 30
@@ -13,6 +13,8 @@ GRIS = (200, 200, 200)
 GRIS_OSCURO = (150, 150, 150)
 ROJO = (255, 0, 0)
 BEIGE = (160, 121, 95)
+
+
     
 class Main:
     def __init__(self):
@@ -30,7 +32,7 @@ class Main:
         self.background_image = pygame.image.load("assets/imagen/background2.jpg") 
         
         self.screen = pygame.display.set_mode((400, 400))  # crea una ventana inicial para el juego  
-        self.rows , self.cols, self.tipo = mostrar_menu_size(pygame.display.get_surface())  # nos muestra las opciones y nos devuelve las filas, columnas y cual nanograma elejimos
+        self.rows , self.cols, self.tipo = mostrar_menu_home(pygame.display.get_surface())  # nos muestra las opciones y nos devuelve las filas, columnas y cual nanograma elejimos
         self.board = Tablero(self.rows , self.cols, self.tipo) # tablero recupera las pistas y la solucion del nanograma que elejimos y crea el tablero de juego
         self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE) # crea la ventana de juego segun el nanograma elejido
         self.running = True
@@ -168,7 +170,7 @@ class Main:
         self.win_time = None
         self.win_sound_played = False
         self.screen = pygame.display.set_mode((400, 400))
-        self.rows, self.cols, self.tipo = mostrar_menu_size(self.window.screen)
+        self.rows, self.cols, self.tipo = mostrar_menu_home(self.window.screen)
         self.window = Ventana(self.rows, self.cols, MARGIN, CELDA_SIZE)
         self.board = Tablero(self.rows, self.cols, self.tipo)
 

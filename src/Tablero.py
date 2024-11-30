@@ -1,12 +1,12 @@
 import pygame
 from Celda import Celda
 
+
 NEGRO = (0, 0, 0)
 BLANCO=(255,255,255)
 GRIS = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 ROJO = (255, 0, 0)
-
 CELDA_SIZE = 30
 MARGIN = 40
 
@@ -27,16 +27,16 @@ class Tablero:
         # Dibujar pistas de las filas
         for i, pista in enumerate(self.hints[0]):
             pista_text = " ".join(map(str, pista))
-            font = pygame.font.SysFont("Comic Sans MS", 20)
+            font = pygame.font.SysFont("Comic Sans MS", 30)
             text_surface = font.render(pista_text, True, NEGRO)
             screen.blit(text_surface, (10, start_y + i * CELDA_SIZE))
 
         # Dibujar pistas de las columnas
         for j, pista in enumerate(self.hints[1]):
             for k, numero in enumerate(pista):
-                font = pygame.font.SysFont("Comic Sans MS", 20)
+                font = pygame.font.SysFont("Comic Sans MS", 30)
                 text_surface = font.render(str(numero), True, NEGRO)
-                screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, (k * 17)))
+                screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, (k * 20)))
 
         # Dibujar las celdas
         for fila in range(self.rows):
