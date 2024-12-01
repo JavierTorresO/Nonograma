@@ -9,12 +9,9 @@ COLOR_FONDO = (255, 250, 205)
 COLOR_BOTON = (160, 121, 95)
 COLOR_TEXTO = (50, 50, 50)
 
-pantalla = None
-
 
 def mostrar_menu_home(screen): 
-    global pantalla
-    pantalla = screen
+
     seleccion = 0
     screen = pygame.display.set_mode((400, 400))
     pygame.display.set_caption('NONOGRAMA!!') # nombre de la ventana
@@ -133,8 +130,7 @@ def wrap_text(text, font, max_width, margin=20):
     return lines
 
 def mostrar_menu_reglas(screen):
-    global pantalla
-    pantalla = screen
+
     pygame.display.set_caption('Reglas del Juego')  # Nombre de la ventana
 
     # Texto de las reglas
@@ -155,8 +151,8 @@ def mostrar_menu_reglas(screen):
 
     # Crear botón "Siguiente"
     boton_rect = pygame.Rect(
-        (pantalla.get_width() - 200) // 2,  # Centrar el botón horizontalmente
-        pantalla.get_height() - 70,  # Colocar el botón al final con margen
+        (screen.get_width() - 200) // 2,  # Centrar el botón horizontalmente
+        screen.get_height() - 70,  # Colocar el botón al final con margen
         200,  # Ancho del botón
         50  # Alto del botón
     )
@@ -168,14 +164,14 @@ def mostrar_menu_reglas(screen):
         screen.fill(COLOR_FONDO)  # Fondo del tutorial
 
         titulo_surface = font_titulo.render("¿Cómo Jugar?", True, NEGRO)
-        titulo_rect = titulo_surface.get_rect(center=(pantalla.get_width() // 2, 50))
+        titulo_rect = titulo_surface.get_rect(center=(screen.get_width() // 2, 50))
         screen.blit(titulo_surface, titulo_rect)
 
         # Obtener el texto de la instrucción actual
         current_text = reglas_text[current_instruction]
 
         # Ajustar el texto para que quepa en la ventana
-        max_width = pantalla.get_width() - 40
+        max_width = screen.get_width() - 40
         lines = wrap_text(current_text, font_texto, max_width)
 
         # Mostrar las instrucciones ajustadas
@@ -228,8 +224,7 @@ def mostrar_menu_reglas(screen):
 
 
 def mostrar_menu_mode(screen):
-    global pantalla
-    pantalla = screen
+
     seleccion = 0
     pygame.display.set_caption('Seleccione el modo de juego') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 50) # estilo de la fuente
@@ -308,8 +303,6 @@ def mostrar_menu_mode(screen):
 
 def mostrar_menu_size(screen):
 
-    global pantalla
-    pantalla = screen
     seleccion = 0
     pygame.display.set_caption('Seleccione cual tablero quiere jugar') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 50) # estilo de la fuente
@@ -368,7 +361,7 @@ def mostrar_menu_size(screen):
                     if seleccion == 4:
                         return mostrar_menu_mode(screen)
                     else:
-                        return seleccionar_opcion_tamano(seleccion, mode = "clasico")
+                        return mostrar_menu_type(screen, seleccion, "clasico")
                 elif event.key == pygame.K_ESCAPE:
                     return mostrar_menu_mode(screen)
 
@@ -380,12 +373,10 @@ def mostrar_menu_size(screen):
                             if i == 4:
                                 return mostrar_menu_mode(screen)
                             else:
-                                return seleccionar_opcion_tamano(i, mode = "clasico")
+                                return mostrar_menu_type(screen, i, "clasico")
 
 def mostrar_menu_size_colores(screen):
 
-    global pantalla
-    pantalla = screen
     seleccion = 0
     pygame.display.set_caption('Seleccione el tamaño del tablero') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 50) # estilo de la fuente
@@ -444,7 +435,7 @@ def mostrar_menu_size_colores(screen):
                     if seleccion == 2:
                         return mostrar_menu_mode(screen)
                     else:
-                        return seleccionar_opcion_tamano(seleccion, mode = "dos_colores")
+                        return mostrar_menu_type(screen, seleccion, "dos_colores")
                 elif event.key == pygame.K_ESCAPE:
                     return mostrar_menu_mode(screen)
 
@@ -456,95 +447,87 @@ def mostrar_menu_size_colores(screen):
                             if i == 2:
                                 return mostrar_menu_mode(screen)
                             else:
-                                return seleccionar_opcion_tamano(i, mode = "dos_colores")
+                                return mostrar_menu_type(screen, i, "dos_colores")
 
-
-def mostrar_menu_type(screen, mode):
-
+def mostrar_menu_type(screen, tamano, mode):
+    print("entro a type")
     seleccion = 0
+    pygame.display.set_caption('Seleccione el tipo de tablero.')
+    font = pygame.font.SysFont('Comic Sans MS', 50)
 
-    pygame.display.set_caption('Seleccione el tipo de tablero.') # Nombre de la ventana
-    font = pygame.font.SysFont('Comic Sans MS', 50) # Estilo de la fuente
-
-    # Opciones de tipo
-    if mode == "clasico": opciones = ['Nonograma 1', 'Nonograma 2', 'Nonograma 3', 'Volver']
-    else: opciones = ['Nonograma 1', 'Nonograma 2', 'Volver']
+    if mode == "clasico":
+        opciones = ['Nonograma 1', 'Nonograma 2', 'Nonograma 3', 'Volver']
+    else:
+        opciones = ['Nonograma 1', 'Nonograma 2', 'Volver']
 
     option_rects = []
 
     while True:
-        screen.fill(COLOR_FONDO) # Color del fondo
-        mouse_pos = pygame.mouse.get_pos() # posicion del mouse
-        option_rects.clear()  # Limpiar la lista en cada frame
+        screen.fill(COLOR_FONDO)
+        mouse_pos = pygame.mouse.get_pos()
+        option_rects.clear()
 
         for i, opcion in enumerate(opciones):
             rect = pygame.Rect(65, 100 + i * 50, 270, 40)
-            
-            # fondo para la opción seleccionada
             if i == seleccion:
-                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  
-                color = BLANCO  # Cambia el color del texto a blanco
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius=10)
+                color = BLANCO
             else:
-                pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
+                pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius=10)
                 color = NEGRO
 
-            # Renderizar el texto
             text_surface = font.render(opcion, True, color)
+            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))
 
-            # Obtener la posición del rectángulo del texto
-            text_rect = text_surface.get_rect(center=(200, 120 + i * 50)) 
-            
             option_rects.append(text_rect)
 
-            # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
+                seleccion = i
 
-            screen.blit(text_surface, text_rect) # renderizar
+            screen.blit(text_surface, text_rect)
 
-        pygame.display.flip() # actualizar
-        # Manejar eventos
+        pygame.display.flip()
+
         for event in pygame.event.get():
-            # Salir al apretar boton de cierre
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            # # Para funcionar con las flechas, enter y escape
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    seleccion = (seleccion+ 1) % len(opciones)
+                    seleccion = (seleccion + 1) % len(opciones)
+                    print(seleccion)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    print(seleccion)
                 elif event.key == pygame.K_RETURN:
                     if seleccion == 0:
-                        return 1
+                        return nanogramas_type(tamano, 1, mode)
                     elif seleccion == 1:
-                        return 2
+                        return nanogramas_type(tamano, 2, mode)
                     elif seleccion == 2:
-                        return 3
+                        if mode != "clasico": return mostrar_menu_size_colores(screen)
+                        else: return nanogramas_type(tamano, 3, mode)
                     else:
                         if mode == "clasico":
                             return mostrar_menu_size(screen)
-                        else:
-                            return mostrar_menu_size_colores(screen)
+            
                 elif event.key == pygame.K_ESCAPE:
                     if mode == "clasico":
                         return mostrar_menu_size(screen)
                     else:
                         return mostrar_menu_size_colores(screen)
 
-            # Detectar click del mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
                             if i == 0:
-                                return 1
+                                return nanogramas_type(tamano, 1, mode)
                             elif i == 1:
-                                return 2
+                                return nanogramas_type(tamano, 2, mode)
                             elif i == 2:
-                                return 3
+                                return nanogramas_type(tamano, 3, mode)
                             else:
                                 if mode == "clasico":
                                     return mostrar_menu_size(screen)
@@ -552,20 +535,13 @@ def mostrar_menu_type(screen, mode):
                                     return mostrar_menu_size_colores(screen)
 
 
-# Retorna el tamaño del tablero segun la opcion seleccionada
-def seleccionar_opcion_tamano(seleccion, mode):
-    global pantalla
-    
-    if seleccion == 4:
-        return mostrar_menu_home(pantalla)
-    
-    tipo = mostrar_menu_type(pantalla, mode)
-    
-    tamano = {
+def nanogramas_type(tamano, tipo, mode):
+    tamanos = {
         0: (5, 5, tipo, mode),
         1: (10, 10, tipo, mode),
         2: (15, 15, tipo, mode),
         3: (20, 20, tipo, mode),
     }
-    
-    return tamano.get(seleccion)
+    print("entro")
+    print(tamanos.get(tamano))
+    return tamanos.get(tamano)
