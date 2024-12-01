@@ -12,7 +12,6 @@ NEGRO = (0, 0, 0)
 GRIS = (200, 200, 200)
 GRIS_OSCURO = (150, 150, 150)
 ROJO = (255, 0, 0)
-BEIGE = (160, 121, 95)
 
 
     
@@ -46,15 +45,6 @@ class Main:
         # Reproducir el sonido de tablero listo
         pygame.mixer.Sound.play(self.sound_board_ready)
 
-        self.reset_button = pygame.Rect(6, 10, 90, 30) # Posicion y tamaño del boton
-
-    def draw_reset_button(self):
-        pygame.draw.rect(self.window.screen, BEIGE, self.reset_button, border_radius=10)  # Dibujar el botón
-        font = pygame.font.SysFont("Comic Sans MS", 20)
-        text = font.render("Reiniciar", True, NEGRO)
-        text_rect = text.get_rect(center = self.reset_button.center)
-        self.window.screen.blit(text, (10,10))
-
     def run(self):
         while self.running:
             self.handle_events()
@@ -64,7 +54,6 @@ class Main:
 
             self.screen.blit(scaled_background, (0, 0))
             self.board.draw(self.window.screen)
-            self.draw_reset_button() # Dibuja el boton de reinicio
 
             if self.board.check_win():
                 if not self.win_time:
@@ -121,9 +110,12 @@ class Main:
                             self.color = 2
                             pygame.mixer.Sound.play(self.sound_click)
 
-                    if self.reset_button.collidepoint(event.pos): # Si se hace clic en el botón de reinicio
+                    if self.board.reset_button.collidepoint(event.pos): # Si se hace clic en el botón de reinicio
                         pygame.mixer.Sound.play(self.sound_resetbutton)
                         self.reset_buttontab() # Reiniciar el tablero
+                    elif self.board.boton_volver.collidepoint(event.pos):  # Si se hace clic en el botón de volver
+                        pygame.mixer.Sound.play(self.sound_resetbutton)
+                        self.return_to_menu()
                     else:
                         self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
                         self.handle_cell_click(event.pos, self.color, lock=True)

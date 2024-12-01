@@ -8,6 +8,8 @@ GRIS = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 ROJO = (222, 10, 10)
 AMARILLO = (200, 200, 30)
+BEIGE = (160, 125, 90)
+
 CELDA_SIZE = 30
 MARGIN = 50
 
@@ -18,6 +20,8 @@ class Tablero:
         self.cols = cols
         self.tipo = tipo
         self.mode = mode
+        self.reset_button = pygame.Rect(6, 10, 90, 30) 
+        self.boton_volver = pygame.Rect(6, 50, 90, 30) 
         self.boton_color1 = None
         self.boton_color2 = None
         self.cells = [[Celda((x, y)) for y in range(self.cols)] for x in range(self.rows)]
@@ -27,6 +31,25 @@ class Tablero:
     def draw(self, screen):
         start_x = MARGIN + 100
         start_y = MARGIN + 100
+
+        # dibujar el boton de reseteo y volver
+        pygame.draw.rect(screen, BEIGE, self.reset_button, border_radius=10)
+        pygame.draw.rect(screen, BEIGE, self.boton_volver, border_radius=10)
+        font = pygame.font.SysFont("Comic Sans MS", 22)
+        #texto boton reiniciar
+        text = font.render("Reiniciar", True, NEGRO)
+        text_rect = text.get_rect()
+        text_rect.x += 20
+        text_rect.y += 18
+        screen.blit(text, text_rect)
+        # texto boton volver
+        text = font.render("Volver", True, NEGRO)
+        text_rect = text.get_rect()
+        text_rect.x += 25
+        text_rect.y += 58
+        screen.blit(text, text_rect)
+
+
 
         # Dibujar pistas de las filas con colores
         for i, pista in enumerate(self.hints[0]):
