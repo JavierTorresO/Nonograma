@@ -134,7 +134,7 @@ class Main:
         if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
             if pos != self.last_cell:  # Solo modificar si la celda es diferente a la última marcada
                 cell = self.board.get_cell(pos)
-                if cell and not cell.is_locked:  # No permitir pintar si la celda está bloqueada
+                if cell and not cell.is_locked and not cell.is_x:  # No permitir pintar si la celda está bloqueada
                     if self.initial_paint_state:  # Si la celda inicial estaba marcada
                         # Desmarcar la celda y resetear colores
                         cell.is_painted = False
