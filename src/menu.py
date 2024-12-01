@@ -83,7 +83,7 @@ def mostrar_menu_type(screen):
     font = pygame.font.SysFont('Comic Sans MS', 40) # Estilo de la fuente
 
     # Opciones de tipo
-    opciones = ['Nanograma 1', 'Nanograma 2', 'Volver']
+    opciones = ['Nanograma 1', 'Nanograma 2', 'Nanograma 3', 'Volver']
     option_rects = []
 
     while True:
@@ -126,31 +126,27 @@ def mostrar_menu_type(screen):
 
             # # Para funcionar con las flechas, enter y escape
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN:  # Mover hacia abajo
                     tipo = (tipo + 1) % len(opciones)
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP:  # Mover hacia arriba
                     tipo = (tipo - 1) % len(opciones)
-                elif event.key == pygame.K_RETURN:
-                    if tipo == 0:
-                        return 1
-                    elif tipo == 1:
-                        return 2
-                    else:
-                        mostrar_menu_size(screen)
-                elif event.key == pygame.K_ESCAPE:
-                    mostrar_menu_size(screen)
+                elif event.key == pygame.K_RETURN:  # Confirmar selección
+                    if tipo in [0, 1, 2]:  # Seleccionar un nonograma
+                        return tipo + 1
+                    elif tipo == 3:  # Volver
+                        return None
+                elif event.key == pygame.K_ESCAPE:  # Volver con ESC
+                    return None
 
             # Detectar click del mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
-                            if i == 0:
-                                return 1
-                            elif i == 1:
-                                return 2
-                            else:
-                                mostrar_menu_size(screen)
+                            if i in [0, 1, 2]:
+                                return i + 1
+                            elif i == 3:
+                                return None
 
 
 # Retorna el tamaño del tablero segun la opcion seleccionada
@@ -162,7 +158,9 @@ def seleccionar_opcion(seleccion):
         sys.exit()
     
     tipo = mostrar_menu_type(pantalla)
-    
+    if tipo is None:  # Volver al menú principal si se selecciona "Volver"
+        mostrar_menu_size(pantalla)
+        return
     tamano = {
         0: (5, 5, tipo),
         1: (10, 10, tipo),
