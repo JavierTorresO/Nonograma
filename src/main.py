@@ -22,7 +22,6 @@ class Main:
         self.win_sound_played = False  # Atributo para controlar si el sonido de victoria se ha reproducido
         pygame.mixer.init()  # Inicializar el mixer de Pygame
         pygame.init()      # Inicializar oygam
-        self.color = None
 
         # Cargar sonidos
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
@@ -36,6 +35,7 @@ class Main:
         self.rows , self.cols, self.tipo, self.mode = mostrar_menu_home(pygame.display.get_surface())  # nos muestra las opciones y nos devuelve las filas, columnas y cual nanograma elejimos
         self.board = Tablero(self.rows , self.cols, self.tipo, self.mode) # tablero recupera las pistas y la solucion del nanograma que elejimos y crea el tablero de juego
         self.window = Ventana(self.rows, self.cols, self.mode, MARGIN, CELDA_SIZE) # crea la ventana de juego segun el nanograma elejido
+        self.color = None if self.mode == "clasico" else 1
         self.running = True
         self.bounce_offset = 0  # Offset para el efecto de baile
         self.bounce_direction = 1  # 1 para abajo, -1 para arriba
@@ -87,22 +87,36 @@ class Main:
     
     def handle_events(self):
         
+        # posiciones de los botonen
+        self.boton1_x = MARGIN + 100 + ((CELDA_SIZE * self.cols) / 2) - 93
+        self.boton1_y = self.window.screen.get_height() - 53
+        self.boton1_width = 86
+        self.boton1_height = 36
+
         if self.win_time:  # No manejar eventos si se ha ganado
             return
 
+
+        # Manejar eventos de las celdas
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Boton izquierdo del mouse
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
+                    if (self.boton1_x <= event.pos[0] <= self.boton1_x + self.boton1_width and self.boton1_y <= event.pos[1] <= self.boton1_y + self.boton1_height): 
+                        self.color = 1
+                        pygame.mixer.Sound.play(self.sound_click)
+                    if (self.boton1_x + 100 <= event.pos[0] <= self.boton1_x + self.boton1_width + 100 and self.boton1_y <= event.pos[1] <= self.boton1_y + self.boton1_height): 
+                        self.color = 2
+                        pygame.mixer.Sound.play(self.sound_click)
                     self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
                     self.handle_cell_click(event.pos, self.color, lock=True)
                 elif event.button == 3:  # Botón derecho del mouse (clic para marcar X)
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_right_click(event.pos)
             elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:  # Botón izquierdo del mouse
+                if event.button == 1:  # Boton izquierdo del mouse
                     self.unlock_all_cells()
             elif event.type == pygame.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo está presionado
@@ -114,15 +128,11 @@ class Main:
                     if event.key == pygame.K_1:
                         self.color = 1
                         # print(self.color)
-                        pygame.mixer.Sound.play(self.sound_click)    
+                        pygame.mixer.Sound.play(self.sound_click)
                     if event.key == pygame.K_2:
                         self.color = 2
                         # print(self.color)
                         pygame.mixer.Sound.play(self.sound_click)
-                    if event.key == pygame.K_3:
-                        self.board.imprimir_cells()
-                    if event.key == pygame.K_4:
-                        self.board.imprimir_solution()
                 
 
     def handle_cell_click(self, mouse_pos, color=None, lock=False):
@@ -142,12 +152,10 @@ class Main:
                         pygame.mixer.Sound.play(self.sound_click)  # Sonido al desmarcar
                     else:
                         if color == 1:  # Pintar con el primer color
-                            print("Pintando con color 1")
                             cell.is_color = 2
                             cell.is_painted = True
                             pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 1
                         elif color == 2:  # Pintar con el segundo color
-                            print("Pintando con color 2")
                             cell.is_color = 3
                             cell.is_painted = True
                             pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 2
@@ -202,6 +210,8 @@ class Main:
         self.rows, self.cols, self.tipo, self.mode = mostrar_menu_home(self.window.screen)
         self.window = Ventana(self.rows, self.cols, self.mode, MARGIN, CELDA_SIZE)
         self.board = Tablero(self.rows, self.cols, self.tipo, self.mode)
+        self.color = None if self.mode == "clasico" else 1
+
 
         # Recargar sonidos si es necesario
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")

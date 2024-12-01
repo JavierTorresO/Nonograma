@@ -54,6 +54,9 @@ class Tablero:
                     color = ROJO
                 elif cell.is_color == 3:
                     color = AMARILLO
+                elif cell.is_color == -1:
+                    color = BLANCO
+                    cell.is_color = 0
                 else:
                     color = DARK_GRAY if cell.is_painted else BLANCO
 
@@ -77,14 +80,19 @@ class Tablero:
             font = pygame.font.SysFont("Comic Sans MS", 35)
             text_surface = font.render("Colores:", True, NEGRO)
             screen.blit(text_surface, ((start_x + ((CELDA_SIZE * self.cols)/2) - 93)/2 - 40, screen.get_height() - 45))
+            font = pygame.font.SysFont("Time New Roman", 27)
 
             # Dibujar dos cuadrados con colores distintos
             pygame.draw.rect(screen, NEGRO, (start_x + ((CELDA_SIZE * self.cols)/2) - 93, screen.get_height() - 53, 86, 36))
             pygame.draw.rect(screen, ROJO, (start_x + ((CELDA_SIZE * self.cols)/2) - 90, screen.get_height() - 50, 80, 30))
+            text_surface = font.render("press 1", True, NEGRO)
+            screen.blit(text_surface, (start_x + ((CELDA_SIZE * self.cols)/2) - 80, screen.get_height() - 45))
+
 
             pygame.draw.rect(screen, NEGRO, (start_x + ((CELDA_SIZE * self.cols)/2) + 7, screen.get_height() - 53, 86, 36))
             pygame.draw.rect(screen, AMARILLO, (start_x + ((CELDA_SIZE * self.cols)/2) + 10, screen.get_height() - 50, 80, 30))
-
+            text_surface = font.render("press 2", True, NEGRO)
+            screen.blit(text_surface, (start_x + ((CELDA_SIZE * self.cols)/2) + 20, screen.get_height() - 45))
 
 
     def get_cell(self, pos):
