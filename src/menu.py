@@ -17,7 +17,7 @@ def mostrar_menu_home(screen):
     pantalla = screen
     seleccion = 0
     screen = pygame.display.set_mode((400, 400))
-    pygame.display.set_caption('NANOGRAMA!!') # nombre de la ventana
+    pygame.display.set_caption('NONOGRAMA!!') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 60) # estilo de la fuente
 
     # Opciones de tamaño
@@ -94,6 +94,16 @@ def mostrar_menu_home(screen):
                                 sys.exit()
 
 
+import pygame
+import sys
+
+# Colores
+BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
+COLOR_FONDO = (240, 230, 200)
+COLOR_BOTON = (160, 121, 95)
+COLOR_TEXTO = (50, 50, 50)
+
 def wrap_text(text, font, max_width, margin=20):
     """
     Envuelve el texto para que se ajuste al ancho máximo de la pantalla.
@@ -129,7 +139,7 @@ def mostrar_menu_reglas(screen):
 
     # Texto de las reglas
     reglas_text = [
-        "1. Un nanograma es un rompecabezas de lógica.",
+        "1. Un nonograma es un rompecabezas de lógica.",
         "2. Usa las pistas para pintar celdas en el tablero.",
         "3. Las pistas indican secuencias de celdas que debes pintar.",
         "4. En el modo clásico, las celdas son blancas y negras.",
@@ -450,7 +460,9 @@ def mostrar_menu_type(screen, mode):
     font = pygame.font.SysFont('Comic Sans MS', 50) # Estilo de la fuente
 
     # Opciones de tipo
-    opciones = ['Nanograma 1', 'Nanograma 2', 'Nanograma 3', 'Volver']
+    if mode == "clasico": opciones = ['Nonograma 1', 'Nonograma 2', 'Nonograma 3', 'Volver']
+    else: opciones = ['Nonograma 1', 'Nonograma 2', 'Volver']
+    
     option_rects = []
 
     while True:
@@ -502,6 +514,8 @@ def mostrar_menu_type(screen, mode):
                         return 1
                     elif seleccion == 1:
                         return 2
+                    elif seleccion == 2:
+                        return 3
                     else:
                         if mode == "clasico":
                             return mostrar_menu_size(screen)
@@ -522,6 +536,8 @@ def mostrar_menu_type(screen, mode):
                                 return 1
                             elif i == 1:
                                 return 2
+                            elif i == 2:
+                                return 3
                             else:
                                 if mode == "clasico":
                                     return mostrar_menu_size(screen)
