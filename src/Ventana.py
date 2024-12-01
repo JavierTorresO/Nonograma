@@ -19,7 +19,7 @@ class Ventana:
             alto = MARGIN + 90 + (rows * CELDA_SIZE) + MARGIN
             return (ancho, alto)
         elif mode == "dos_colores":
-            ancho = MARGIN + 100 + (cols * CELDA_SIZE) + MARGIN 
+            ancho = MARGIN + 100 + (cols * CELDA_SIZE) + MARGIN
             alto = MARGIN + 140 + (rows * CELDA_SIZE) + MARGIN
             return (ancho, alto)
         

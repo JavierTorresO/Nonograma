@@ -12,7 +12,7 @@ CELDA_SIZE = 30
 MARGIN = 50
 
 
-class Tablero:  
+class Tablero:
     def __init__(self, rows, cols, tipo, mode):
         self.rows = rows
         self.cols = cols
@@ -43,16 +43,17 @@ class Tablero:
         # Dibujar las celdas
         for fila in range(self.rows):
             for columna in range(self.cols):
-                # Obtener la celda actual
                 cell = self.cells[fila][columna]
-
-                # Calcular la posición de la celda
                 x = start_x + columna * CELDA_SIZE
                 y = start_y + fila * CELDA_SIZE
 
                 # Determinar el color de la celda
                 if cell.is_x:
                     color = BLANCO
+                elif cell.is_color == 2:
+                    color = ROJO
+                elif cell.is_color == 3:
+                    color = AMARILLO
                 else:
                     color = DARK_GRAY if cell.is_painted else BLANCO
 
@@ -62,12 +63,13 @@ class Tablero:
                 # Dibujar el borde de la celda
                 pygame.draw.rect(screen, NEGRO, [x, y, CELDA_SIZE, CELDA_SIZE], 1)
 
-                # Dibujar la "X" si está marcada con una
+                # Dibujar la "X" si está marcada
                 if cell.is_x:
                     pygame.draw.line(screen, NEGRO, (x, y), (x + CELDA_SIZE, y + CELDA_SIZE), 2)
                     pygame.draw.line(screen, NEGRO, (x + CELDA_SIZE, y), (x, y + CELDA_SIZE), 2)
-        if self.mode == "dos_colores":
 
+        # Dibujar interfaz del modo "dos colores" si aplica
+        if self.mode == "dos_colores":
             overlay = pygame.Surface((screen.get_width(), 70), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 90))  # Negro con 35% de transparencia (90 de 255)
             screen.blit(overlay, (0, screen.get_height() - 70))
@@ -84,6 +86,7 @@ class Tablero:
             pygame.draw.rect(screen, AMARILLO, (start_x + ((CELDA_SIZE * self.cols)/2) + 10, screen.get_height() - 50, 80, 30))
 
 
+
     def get_cell(self, pos):
         x, y = pos
         return self.cells[y][x] if 0 <= x < self.cols and 0 <= y < self.rows else None
@@ -91,9 +94,41 @@ class Tablero:
     def check_win(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                if self.cells[i][j].is_painted != self.solution[i][j]:
-                    return False
+
+                if self.mode == "clasico":
+                    if self.cells[i][j].is_painted != self.solution[i][j]:
+                        return False
+
+                else:
+                    if self.solution[i][j] == 0:
+                        # La celda debe estar sin pintar (vacía)
+                        if self.cells[i][j].is_painted:
+                            return False
+                    elif self.solution[i][j] == 2:
+                        # La celda debe estar pintada con el primer color
+                        if self.cells[i][j].is_color != 2:
+                            return False
+                    elif self.solution[i][j] == 3:
+                        # La celda debe estar pintada con el segundo color
+                        if self.cells[i][j].is_color != 3:
+                            return False
+
         return True
+
+    
+    def imprimir_cells(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                print(self.cells[i][j], end=" ")
+            print()
+        
+    def imprimir_solution(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                print(self.solution[i][j], end=" ")
+            print()
+
+
 
 def seleccionar_nanograma(rows, cols, tipo, mode):
     if mode == "clasico":
@@ -282,11 +317,11 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 )
 
                 solution = [ #ejemplo1 de 5x5: corazon
-                    [0, 1, 0, 2, 0],
-                    [1, 0, 1, 0, 2],
-                    [1, 0, 0, 0, 2],
-                    [0, 1, 0, 2, 0],
-                    [0, 0, 2, 0, 0],
+                    [3, 2, 3, 2, 3],
+                    [2, 2, 2, 2, 2],
+                    [2, 2, 2, 2, 2],
+                    [3, 2, 2, 2, 3],
+                    [3, 3, 2, 3, 3],
                 ]
                 return hints, solution
             else: 
@@ -296,11 +331,11 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 )
 
                 solution = [ #ejemplo2 de 5x5: ajedrez
-                    [2, 0, 2, 0, 2],
-                    [0, 1, 0, 1, 0],
-                    [2, 0, 2, 0, 2],
-                    [0, 1, 0, 1, 0],
-                    [2, 0, 2, 0, 2],
+                    [2, 3, 2, 3, 2],
+                    [3, 2, 3, 2, 3],
+                    [2, 3, 2, 3, 2],
+                    [3, 2, 3, 2, 3],
+                    [2, 3, 2, 3, 2],
                 ]   
                 return hints, solution
         elif rows == 10 and cols == 10:
@@ -311,16 +346,16 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 )
 
                 solution = [ #ejemplo1 de 10x10: casa
-                    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
-                    [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
-                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                    [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
-                    [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
+                    [0, 0, 0, 2, 2, 2, 2, 0, 0, 0],
+                    [0, 0, 2, 2, 2, 2, 2, 2, 0, 0],
+                    [0, 2, 2, 2, 2, 2, 2, 2, 2, 0],
+                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2], 
+                    [0, 3, 0, 0, 3, 3, 0, 0, 3, 0],
+                    [0, 3, 0, 0, 3, 3, 0, 0, 3, 0],
+                    [0, 3, 3, 3, 3, 3, 3, 3, 3, 0],
+                    [0, 3, 3, 3, 3, 3, 3, 3, 3, 0],
+                    [0, 3, 3, 3, 0, 0, 3, 3, 3, 0],
+                    [0, 3, 3, 3, 0, 0, 3, 3, 3, 0],
                 ]
                 return hints, solution
             else:
@@ -329,16 +364,16 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [[4], [2], [7], [3,4], [7,2], [7,2], [3,4], [7], [2], [4]]  # Pistas verticales
                 )
 
-                solution = [ #ejemplo2 de 10x10: perro
-                    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-                    [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
-                    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-                    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-                    [0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
-                    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+                solution = [ #ejemplo2 de 10x10: rombo amarillo
+                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+                    [2, 2, 2, 2, 3, 3, 2, 2, 2, 2],
+                    [2, 2, 2, 3, 3, 3, 3, 2, 2, 2],
+                    [2, 2, 3, 3, 3, 3, 3, 3, 2, 2],
+                    [2, 3, 3, 3, 3, 3, 3, 3, 3, 2],
+                    [2, 3, 3, 3, 3, 3, 3, 3, 3, 2],
+                    [2, 2, 3, 3, 3, 3, 3, 3, 2, 2],
+                    [2, 2, 2, 3, 3, 3, 3, 2, 2, 2],
+                    [2, 2, 2, 2, 3, 3, 2, 2, 2, 2],
+                    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
                 ]
                 return hints, solution

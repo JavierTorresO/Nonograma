@@ -22,6 +22,7 @@ class Main:
         self.win_sound_played = False  # Atributo para controlar si el sonido de victoria se ha reproducido
         pygame.mixer.init()  # Inicializar el mixer de Pygame
         pygame.init()      # Inicializar oygam
+        self.color = None
 
         # Cargar sonidos
         self.sound_click = pygame.mixer.Sound("assets/sonidos/click-sound.mp3")  # al hacer clic en una celda
@@ -85,6 +86,7 @@ class Main:
 
     
     def handle_events(self):
+        
         if self.win_time:  # No manejar eventos si se ha ganado
             return
 
@@ -95,7 +97,7 @@ class Main:
                 if event.button == 1:  # Boton izquierdo del mouse
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
-                    self.handle_cell_click(event.pos, lock=True)
+                    self.handle_cell_click(event.pos, self.color, lock=True)
                 elif event.button == 3:  # Botón derecho del mouse (clic para marcar X)
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
                     self.handle_right_click(event.pos)
@@ -104,34 +106,60 @@ class Main:
                     self.unlock_all_cells()
             elif event.type == pygame.MOUSEMOTION:
                 if pygame.mouse.get_pressed()[0]:  # Si el botón izquierdo está presionado
-                    self.handle_cell_click(event.pos)
+                    self.handle_cell_click(event.pos, self.color)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.return_to_menu()  # Volver al menú cuando se presiona Escape
+                if self.mode == "dos_colores":
+                    if event.key == pygame.K_1:
+                        self.color = 1
+                        # print(self.color)
+                        pygame.mixer.Sound.play(self.sound_click)    
+                    if event.key == pygame.K_2:
+                        self.color = 2
+                        # print(self.color)
+                        pygame.mixer.Sound.play(self.sound_click)
+                    if event.key == pygame.K_3:
+                        self.board.imprimir_cells()
+                    if event.key == pygame.K_4:
+                        self.board.imprimir_solution()
+                
 
-    def handle_cell_click(self, mouse_pos, lock=False):
+    def handle_cell_click(self, mouse_pos, color=None, lock=False):
         pos_x = (mouse_pos[0] - (MARGIN + 100)) // CELDA_SIZE
         pos_y = (mouse_pos[1] - (MARGIN + 100)) // CELDA_SIZE
         pos = (pos_x, pos_y)
-
+    
         # Verificar si el clic está dentro de los límites del tablero
         if 0 <= pos_x < self.cols and 0 <= pos_y < self.rows:
             if pos != self.last_cell:  # Solo modificar si la celda es diferente a la última marcada
                 cell = self.board.get_cell(pos)
-                if cell:
-                    if not cell.is_x and not cell.is_locked:  # No permitir pintar si la celda tiene una "X" o está bloqueada
-                        if self.initial_paint_state is not None:
-                            if self.initial_paint_state:  # Si la celda inicial estaba marcada
-                                if cell.is_painted:
-                                    cell.is_painted = False  # Desmarcar la celda
-                                    pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido
-                            else:  # Si la celda inicial estaba desmarcada
-                                if not cell.is_painted:
-                                    cell.is_painted = True  # Marcar la celda
-                                    pygame.mixer.Sound.play(self.sound_click)  # Reproducir sonido
-                        if lock:
-                            cell.is_locked = True  # Bloquear la celda si se especifica
-                        self.last_cell = pos  # Actualizar la última celda marcada
+                if cell and not cell.is_locked:  # No permitir pintar si la celda está bloqueada
+                    if self.initial_paint_state:  # Si la celda inicial estaba marcada
+                        # Desmarcar la celda y resetear colores
+                        cell.is_painted = False
+                        cell.is_color = 0
+                        pygame.mixer.Sound.play(self.sound_click)  # Sonido al desmarcar
+                    else:
+                        if color == 1:  # Pintar con el primer color
+                            print("Pintando con color 1")
+                            cell.is_color = 2
+                            cell.is_painted = True
+                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 1
+                        elif color == 2:  # Pintar con el segundo color
+                            print("Pintando con color 2")
+                            cell.is_color = 3
+                            cell.is_painted = True
+                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 2
+                        else:  # Pintar sin especificar color (modo clásico)
+                            cell.is_painted = True
+                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar en modo clásico
+    
+                    if lock:
+                        cell.is_locked = True  # Bloquear la celda si se especifica
+                    self.last_cell = pos  # Actualizar la última celda marcada
+
+
                         
 
     def unlock_all_cells(self):
@@ -167,6 +195,7 @@ class Main:
 
     # Volver al menu de seleccion
     def return_to_menu(self):
+        self.color = None
         self.win_time = None
         self.win_sound_played = False
         self.screen = pygame.display.set_mode((400, 400))

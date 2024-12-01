@@ -164,7 +164,7 @@ def mostrar_menu_mode(screen):
                             if i == 0:
                                 return mostrar_menu_size(screen)
                             elif i == 1:
-                                return mostrar_menu_size_colores
+                                return mostrar_menu_size_colores(screen)
                             else:
                                 return mostrar_menu_home(screen)
 
@@ -325,7 +325,6 @@ def mostrar_menu_size_colores(screen):
 def mostrar_menu_type(screen, mode):
 
     seleccion = 0
-    print("reseteo de seleccion" + str(seleccion))
 
     pygame.display.set_caption('Seleccione el tipo de tablero.') # Nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 50) # Estilo de la fuente
@@ -376,10 +375,8 @@ def mostrar_menu_type(screen, mode):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion+ 1) % len(opciones)
-                    print(seleccion)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
-                    print(seleccion)
                 elif event.key == pygame.K_RETURN:
                     if seleccion == 0:
                         return 1
