@@ -6,6 +6,9 @@ BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
 COLOR_SELECC = (160, 121, 95)
 COLOR_FONDO = (255, 250, 205)
+COLOR_BOTON = (160, 121, 95)
+COLOR_TEXTO = (50, 50, 50)
+
 pantalla = None
 
 
@@ -13,11 +16,12 @@ def mostrar_menu_home(screen):
     global pantalla
     pantalla = screen
     seleccion = 0
+    screen = pygame.display.set_mode((400, 400))
     pygame.display.set_caption('NANOGRAMA!!') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 60) # estilo de la fuente
 
     # Opciones de tamaño
-    opciones = ['jugar', 'tutoriales', 'Salir']
+    opciones = ['Jugar', 'Reglas', 'Salir']
 
     # lista de rectángulos de posición del texto de los tamaños
     option_rects = []
@@ -70,7 +74,7 @@ def mostrar_menu_home(screen):
                     if seleccion == 0:
                         return mostrar_menu_mode(screen)
                     elif seleccion == 1:
-                        print("mostrar_menu_tutorial") # No implementado
+                        return mostrar_menu_reglas(screen) 
                     else:
                         pygame.quit()
                         sys.exit()
@@ -84,10 +88,136 @@ def mostrar_menu_home(screen):
                             if i == 0:
                                 return mostrar_menu_mode(screen)
                             elif i == 1:
-                                print("mostrar_menu_tutorial")# No implementado
+                                return mostrar_menu_reglas(screen)
                             else:
                                 pygame.quit()
                                 sys.exit()
+
+
+import pygame
+import sys
+
+# Colores
+BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
+COLOR_FONDO = (240, 230, 200)
+COLOR_BOTON = (160, 121, 95)
+COLOR_TEXTO = (50, 50, 50)
+
+def wrap_text(text, font, max_width, margin=20):
+    """
+    Envuelve el texto para que se ajuste al ancho máximo de la pantalla.
+    `margin` define un espacio adicional antes de alcanzar el límite máximo de la ventana.
+    """
+    lines = []
+    words = text.split(' ')
+    current_line = ""
+
+    # Reducir el ancho máximo para dejar espacio de margen
+    max_width -= margin
+
+    for word in words:
+        # Comprobar si añadir la siguiente palabra desbordaría el ancho máximo
+        test_line = current_line + (word if current_line == "" else " " + word)
+        if font.size(test_line)[0] <= max_width:
+            current_line = test_line
+        else:
+            if current_line:
+                lines.append(current_line)
+            current_line = word
+    
+    # Añadir la última línea
+    if current_line:
+        lines.append(current_line)
+    
+    return lines
+
+def mostrar_menu_reglas(screen):
+    global pantalla
+    pantalla = screen
+    pygame.display.set_caption('Reglas del Juego')  # Nombre de la ventana
+
+    # Texto de las reglas
+    reglas_text = [
+        "1. Un nanograma es un rompecabezas de lógica.",
+        "2. Usa las pistas para pintar celdas en el tablero.",
+        "3. Las pistas indican secuencias de celdas que debes pintar.",
+        "4. En el modo clásico, las celdas son blancas y negras.",
+        "5. En el modo dos colores, pinta con los colores rojo y amarillo.",
+        "6. No dejes espacios entre celdas pintadas de una misma pista.",
+        "7. ¡Completa el tablero según las pistas para ganar!",
+    ]
+
+    # Fuentes
+    font_titulo = pygame.font.SysFont('Comic Sans MS', 40)
+    font_texto = pygame.font.SysFont('Comic Sans MS', 25)
+    font_boton = pygame.font.SysFont('Comic Sans MS', 30)
+
+    # Crear botón "Siguiente"
+    boton_rect = pygame.Rect(
+        (pantalla.get_width() - 200) // 2,  # Centrar el botón horizontalmente
+        pantalla.get_height() - 70,  # Colocar el botón al final con margen
+        200,  # Ancho del botón
+        50  # Alto del botón
+    )
+
+    # Variable para controlar el índice de la instrucción actual
+    current_instruction = 0
+
+    while True:
+        screen.fill(COLOR_FONDO)  # Fondo del tutorial
+
+        titulo_surface = font_titulo.render("¿Cómo Jugar?", True, NEGRO)
+        titulo_rect = titulo_surface.get_rect(center=(pantalla.get_width() // 2, 50))
+        screen.blit(titulo_surface, titulo_rect)
+
+        # Obtener el texto de la instrucción actual
+        current_text = reglas_text[current_instruction]
+
+        # Ajustar el texto para que quepa en la ventana
+        max_width = pantalla.get_width() - 40
+        lines = wrap_text(current_text, font_texto, max_width)
+
+        # Mostrar las instrucciones ajustadas
+        y_offset = 120
+        for line in lines:
+            texto_surface = font_texto.render(line, True, COLOR_TEXTO)
+            screen.blit(texto_surface, (50, y_offset))
+            y_offset += 40  # Incrementar la posición para la siguiente línea
+
+        # Cambiar el texto del boton en la ultima pista
+        if current_instruction == len(reglas_text) - 1:
+            boton_text = "Jugar"
+        else:
+            boton_text = "Siguiente"
+
+        # Boton Siguiente o Jugar
+        pygame.draw.rect(screen, COLOR_BOTON, boton_rect, border_radius=10)
+        texto_boton = font_boton.render(boton_text, True, BLANCO)
+        texto_boton_rect = texto_boton.get_rect(center=boton_rect.center)
+        screen.blit(texto_boton, texto_boton_rect)
+
+        pygame.display.flip()  # Actualizar pantalla
+
+        # Manejar eventos
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Cuando el usuario haga clic en el botón siguiente o jugar
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if boton_rect.collidepoint(event.pos):
+                    # Si no estamos en la última instrucción, mostramos la siguiente
+                    if current_instruction < len(reglas_text) - 1:
+                        current_instruction += 1
+                    else:
+                        # Si hemos llegado al final, llamamos a la función para jugar
+                        return mostrar_menu_mode(screen)
+
+            # Usar la tecla ESC para regresar al menú principal
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                return mostrar_menu_home(screen)  # Vuelve al menú de selección de modo
 
 
 def mostrar_menu_mode(screen):
@@ -192,7 +322,7 @@ def mostrar_menu_size(screen):
             # Crear fondo para la opción seleccionada
             rect = pygame.Rect(100, 100 + i * 50, 200, 40)
             if i == seleccion:
-                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo color para opción seleccionada
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
                 pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
@@ -202,8 +332,8 @@ def mostrar_menu_size(screen):
             text_surface = font.render(opcion, True, color)
 
 
-            # Obtener la posición del rectángulo del texto
-            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # centrado en el eje X
+            #  posición del rectángulo del texto
+            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  
             option_rects.append(text_rect)
 
             # Resaltar la opción con el mouse
@@ -278,7 +408,7 @@ def mostrar_menu_size_colores(screen):
             text_surface = font.render(opcion, True, color)
 
 
-            # Obtener la posición del rectángulo del texto
+            #  posición del rectángulo del texto
             text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # centrado en el eje X
             option_rects.append(text_rect)
 
@@ -341,9 +471,9 @@ def mostrar_menu_type(screen, mode):
         for i, opcion in enumerate(opciones):
             rect = pygame.Rect(65, 100 + i * 50, 270, 40)
             
-            # Crear fondo para la opción seleccionada
+            # fondo para la opción seleccionada
             if i == seleccion:
-                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  # Fondo COLOR_SELECC para opción seleccionada
+                pygame.draw.rect(screen, COLOR_SELECC, rect, border_radius = 10)  
                 color = BLANCO  # Cambia el color del texto a blanco
             else:
                 pygame.draw.rect(screen, COLOR_FONDO, rect, border_radius = 10)
@@ -353,7 +483,7 @@ def mostrar_menu_type(screen, mode):
             text_surface = font.render(opcion, True, color)
 
             # Obtener la posición del rectángulo del texto
-            text_rect = text_surface.get_rect(center=(200, 120 + i * 50))  # Centrado en el eje X
+            text_rect = text_surface.get_rect(center=(200, 120 + i * 50)) 
             
             option_rects.append(text_rect)
 

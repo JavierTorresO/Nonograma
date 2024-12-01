@@ -7,7 +7,7 @@ BLANCO=(255,255,255)
 GRIS = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 ROJO = (222, 10, 10)
-AMARILLO = (222, 222, 10)
+AMARILLO = (200, 200, 30)
 CELDA_SIZE = 30
 MARGIN = 50
 
@@ -415,5 +415,5 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 ]
 
                 hints = generar_pistas(solution)
-                
+
                 return hints, solution
