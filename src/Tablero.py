@@ -26,19 +26,26 @@ class Tablero:
         start_x = MARGIN + 100
         start_y = MARGIN + 100
 
-        # Dibujar pistas de las filas
+        # Dibujar pistas de las filas con colores
         for i, pista in enumerate(self.hints[0]):
-            pista_text = " ".join(map(str, pista))
-            font = pygame.font.SysFont("Comic Sans MS", 30)
-            text_surface = font.render(pista_text, True, NEGRO)
-            screen.blit(text_surface, (10, start_y + i * CELDA_SIZE))
-
-        # Dibujar pistas de las columnas
-        for j, pista in enumerate(self.hints[1]):
-            for k, numero in enumerate(pista):
+            x = 10
+            y = start_y + i * CELDA_SIZE
+            for numero, color in pista:
                 font = pygame.font.SysFont("Comic Sans MS", 30)
-                text_surface = font.render(str(numero), True, NEGRO)
-                screen.blit(text_surface, (start_x + j * CELDA_SIZE + 5, (k * 20)))
+                text_surface = font.render(str(numero), True, ROJO if color == 2 else AMARILLO if color == 3 else NEGRO)
+                screen.blit(text_surface, (x, y))
+                x += 20
+
+        # Dibujar pistas de las columnas con colores
+        for j, pista in enumerate(self.hints[1]):
+            x = start_x + j * CELDA_SIZE + 5
+            y = 10
+            for numero, color in pista:
+                font = pygame.font.SysFont("Comic Sans MS", 30)
+                text_surface = font.render(str(numero), True, ROJO if color == 2 else AMARILLO if color == 3 else NEGRO)
+                screen.blit(text_surface, (x, y))
+                y += 20
+
 
         # Dibujar las celdas
         for fila in range(self.rows):
@@ -54,9 +61,6 @@ class Tablero:
                     color = ROJO
                 elif cell.is_color == 3:
                     color = AMARILLO
-                elif cell.is_color == -1:
-                    color = BLANCO
-                    cell.is_color = 0
                 else:
                     color = DARK_GRAY if cell.is_painted else BLANCO
 
@@ -124,28 +128,64 @@ class Tablero:
         return True
 
     
-    def imprimir_cells(self):
-        for i in range(self.rows):
-            for j in range(self.cols):
-                print(self.cells[i][j], end=" ")
-            print()
-        
-    def imprimir_solution(self):
-        for i in range(self.rows):
-            for j in range(self.cols):
-                print(self.solution[i][j], end=" ")
-            print()
+def generar_pistas(solution):
+    pistas_horizontales = []
+    pistas_verticales = []
+    
+    # Generar pistas horizontales
+    for row in solution:
+        pistas = []
+        current_color = None
+        count = 0
+        for celda in row:
+            if celda > 0:  # Ignorar celdas vacías
+                if celda == current_color:
+                    count += 1
+                else:
+                    if current_color is not None:  # Guardar el segmento anterior
+                        pistas.append((count, current_color))
+                    current_color = celda
+                    count = 1
+            else:  # Celda vacía
+                if current_color is not None:
+                    pistas.append((count, current_color))
+                    current_color = None
+                    count = 0
+        if current_color is not None:  # Guardar último segmento
+            pistas.append((count, current_color))
+        pistas_horizontales.append(pistas)
+    
+    # Generar pistas verticales
+    for col in range(len(solution[0])):
+        pistas = []
+        current_color = None
+        count = 0
+        for row in solution:
+            celda = row[col]
+            if celda > 0:  # Ignorar celdas vacías
+                if celda == current_color:
+                    count += 1
+                else:
+                    if current_color is not None:  # Guardar el segmento anterior
+                        pistas.append((count, current_color))
+                    current_color = celda
+                    count = 1
+            else:  # Celda vacía
+                if current_color is not None:
+                    pistas.append((count, current_color))
+                    current_color = None
+                    count = 0
+        if current_color is not None:  # Guardar último segmento
+            pistas.append((count, current_color))
+        pistas_verticales.append(pistas)
 
+    return pistas_horizontales, pistas_verticales
 
 
 def seleccionar_nanograma(rows, cols, tipo, mode):
     if mode == "clasico":
         if rows == 5 and cols == 5:
             if tipo == 1:
-                hints = (
-                    [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],  # Pistas horizontales
-                    [[2], [1, 1], [1, 1], [1, 1], [2]]  # Pistas verticales
-                )
 
                 solution = [ #ejemplo1 de 5x5: corazon
                     [0, 1, 0, 1, 0],
@@ -154,27 +194,25 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 1, 0, 1, 0],
                     [0, 0, 1, 0, 0],
                 ]
-                return hints, solution
-            else: 
-                hints = (
-                    [[1, 1, 1], [1, 1], [1, 1, 1], [1, 1], [1, 1, 1]],  # Pistas horizontales
-                    [[1, 1, 1], [1, 1], [1, 1, 1], [1, 1], [1, 1, 1]]  # Pistas verticales
-                )
 
+                hints = generar_pistas(solution)
+
+                return hints, solution
+            else:
+                
                 solution = [ #ejemplo2 de 5x5: ajedrez
                     [1, 0, 1, 0, 1],
                     [0, 1, 0, 1, 0],
                     [1, 0, 1, 0, 1],
                     [0, 1, 0, 1, 0],
                     [1, 0, 1, 0, 1],
-                ]   
+                ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
         elif rows == 10 and cols == 10:
             if tipo == 1:
-                hints = (
-                    [[4], [6], [8], [10], [1, 2, 1], [1, 2, 1], [8], [8], [3, 3], [3, 3]],  # Pistas horizontales
-                    [[1], [8], [4, 3], [4, 4], [7], [7], [4, 4], [4, 3], [8], [1]],  # Pistas verticales
-                )
 
                 solution = [ #ejemplo1 de 10x10: casa
                     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
@@ -188,13 +226,12 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
                     [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
             else:
-                hints = (
-                    [[4], [8], [10], [1, 1, 2, 1, 1], [1, 1, 2, 1, 1], [1, 6, 1], [6], [2, 2], [4], [2]],  # Pistas horizontales
-                    [[4], [2], [7], [3,4], [7,2], [7,2], [3,4], [7], [2], [4]]  # Pistas verticales
-                )
-
+                
                 solution = [ #ejemplo2 de 10x10: perro
                     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
                     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -207,14 +244,13 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
                     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
         if rows == 15 and cols == 15:
             if tipo == 1:
-                hints = (
-                    [[15], [7, 7], [2,4,4,2], [3,7,3], [5,5], [4, 4], [4, 1,1,4], [1,1,1,1], [4,4], [4,3,4], [5, 5], [3,7,3], [2,4,4,2], [7,7], [15]],  # Pistas horizontales
-                    [[15], [7,7], [2,4,4,2], [3,7,3], [5,5], [4,4], [4, 1,1,4], [1,1,1,1,1], [4,1,1,4], [4,4], [5,5], [3,7,3], [2,4,4,2], [7,7], [15]]  # Pistas verticales
-                )
-
+            
                 solution = [ #ejemplo1 de 15x15: sol feliz
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                     [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
@@ -232,12 +268,12 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
             else:
-                hints = (
-                    [[3], [5], [4,3], [7], [5], [3], [5], [1,8], [3,3,3], [7, 3, 2], [5,4,2], [8,2], [10], [2,3], [6]],           # Pistas horizontales
-                    [[3], [4], [5], [4], [5], [6], [3,2,1], [2,2,5], [4,2,6], [8,2,3], [8,2,1,1], [2,6,2,1], [4,6], [2,4], [1]]   # Pistas verticales
-                )
+                
                 solution = [ # ejemplo2 de 15x15: pato
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
@@ -255,13 +291,12 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
         if rows == 20 and cols == 20:
             if tipo == 1:
-                hints = (
-                    [[9], [2,1,1,1,1], [2,1,1,1,1], [1,1,1,1], [1,6], [1,1,3,4,2], [2,2,5,5,1], [4,1,3,2,3], [2,1,3,1,3,2], [1,1,3,1,3,2], [2,1,3,1,3,2], [2,1,3,1,3,2], [2,1,3,1,3,2], [2,1,3,1,3,3], [2,1,3,1,9], [2,1,3,1,9], [2,1,3,1,8], [1,3,1,3,2], [5,6], [10]],  # Pistas horizontales
-                    [[5,1,8], [2,11,1], [1,1,1,1,3], [1,1,13], [2,1,2,3], [1,1,9,2], [2,1,11,1], [1,1,2,9,2], [2,3,3], [1,14], [1,2,3], [1,1,2,9,2], [1,1,12], [16], [3,3], [1,1,3], [1,1,3], [1,2,4], [2,10], [11]]  # Pistas verticales
-                )
 
                 solution = [ #ejemplo1 de 20x20: cerveza
                     [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -285,12 +320,11 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
                     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
             else:
-                hints = (
-                    [[4], [1,1,1], [2,1,4,1], [1, 1, 1,1,1], [3,1,1,1,1], [1,1,1,1,1], [3,1,1,1], [1,1,1], [1, 10], [1,2,6,2], [1,1,3,3,1], [1,4,4], [1,4,4], [3,5,5], [2,2,5,5], [3,1,4,4], [5,4,4], [3,1,2,2,1], [2,6,2], [8,10]],  # Pistas horizontales
-                    [[3,1], [5,1], [13,3,1], [1,1,1,2,2,1], [1,1,3,1], [1], [1], [1], [10], [2,6,2], [4,1,8,1], [1,1,12], [1,4,3,2,2], [1, 1,2,2], [1,1,2,2], [1,9,2,2], [1,12], [7,8,1], [2,6,2], [10]]  # Pistas verticales
-                )
 
                 solution = [ #ejemplo2 de 20x20: llave y candado
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
@@ -314,15 +348,14 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1],
                     [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
             
     elif mode == "dos_colores":
         if rows == 5 and cols == 5:
             if tipo == 1:
-                hints = (
-                    [[1, 1], [1, 1, 1], [1, 1], [1, 1], [1]],  # Pistas horizontales
-                    [[2], [1, 1], [1, 1], [1, 1], [2]]  # Pistas verticales
-                )
 
                 solution = [ #ejemplo1 de 5x5: corazon
                     [3, 2, 3, 2, 3],
@@ -331,27 +364,24 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [3, 2, 2, 2, 3],
                     [3, 3, 2, 3, 3],
                 ]
+                hints = generar_pistas(solution)
+
                 return hints, solution
             else: 
-                hints = (
-                    [[1, 1, 1], [1, 1], [1, 1, 1], [1, 1], [1, 1, 1]],  # Pistas horizontales
-                    [[1, 1, 1], [1, 1], [1, 1, 1], [1, 1], [1, 1, 1]]  # Pistas verticales
-                )
-
+                
                 solution = [ #ejemplo2 de 5x5: ajedrez
                     [2, 3, 2, 3, 2],
                     [3, 2, 3, 2, 3],
                     [2, 3, 2, 3, 2],
                     [3, 2, 3, 2, 3],
                     [2, 3, 2, 3, 2],
-                ]   
+                ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
         elif rows == 10 and cols == 10:
             if tipo == 1:
-                hints = (
-                    [[4], [6], [8], [10], [1, 2, 1], [1, 2, 1], [8], [8], [3, 3], [3, 3]],  # Pistas horizontales
-                    [[1], [8], [4, 3], [4, 4], [7], [7], [4, 4], [4, 3], [8], [1]],  # Pistas verticales
-                )
 
                 solution = [ #ejemplo1 de 10x10: casa
                     [0, 0, 0, 2, 2, 2, 2, 0, 0, 0],
@@ -365,12 +395,11 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 3, 3, 3, 0, 0, 3, 3, 3, 0],
                     [0, 3, 3, 3, 0, 0, 3, 3, 3, 0],
                 ]
+
+                hints = generar_pistas(solution)
+
                 return hints, solution
             else:
-                hints = (
-                    [[4], [8], [10], [1, 1, 2, 1, 1], [1, 1, 2, 1, 1], [1, 6, 1], [6], [2, 2], [4], [2]],  # Pistas horizontales
-                    [[4], [2], [7], [3,4], [7,2], [7,2], [3,4], [7], [2], [4]]  # Pistas verticales
-                )
 
                 solution = [ #ejemplo2 de 10x10: rombo amarillo
                     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
@@ -384,4 +413,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [2, 2, 2, 2, 3, 3, 2, 2, 2, 2],
                     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
                 ]
+
+                hints = generar_pistas(solution)
+                
                 return hints, solution
