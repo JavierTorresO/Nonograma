@@ -506,8 +506,7 @@ def mostrar_menu_type(screen, tamano, mode):
                         if mode != "clasico": return mostrar_menu_size_colores(screen)
                         else: return nanogramas_type(tamano, 3, mode)
                     else:
-                        if mode == "clasico":
-                            return mostrar_menu_size(screen)
+                        return mostrar_menu_size(screen)
             
                 elif event.key == pygame.K_ESCAPE:
                     if mode == "clasico":
@@ -524,12 +523,11 @@ def mostrar_menu_type(screen, tamano, mode):
                             elif i == 1:
                                 return nanogramas_type(tamano, 2, mode)
                             elif i == 2:
-                                return nanogramas_type(tamano, 3, mode)
+                                if mode != "clasico": return mostrar_menu_size_colores(screen)
+                                else: return nanogramas_type(tamano, 3, mode)
                             else:
-                                if mode == "clasico":
-                                    return mostrar_menu_size(screen)
-                                else:
-                                    return mostrar_menu_size_colores(screen)
+                                return mostrar_menu_size(screen)
+                                
 
 
 def nanogramas_type(tamano, tipo, mode):
