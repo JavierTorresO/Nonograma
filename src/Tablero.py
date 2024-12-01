@@ -18,6 +18,8 @@ class Tablero:
         self.cols = cols
         self.tipo = tipo
         self.mode = mode
+        self.boton_color1 = None
+        self.boton_color2 = None
         self.cells = [[Celda((x, y)) for y in range(self.cols)] for x in range(self.rows)]
         self.hints, self.solution = seleccionar_nanograma(self.rows, self.cols, self.tipo, self.mode)
 
@@ -87,13 +89,15 @@ class Tablero:
             font = pygame.font.SysFont("Time New Roman", 27)
 
             # Dibujar dos cuadrados con colores distintos
-            pygame.draw.rect(screen, NEGRO, (start_x + ((CELDA_SIZE * self.cols)/2) - 93, screen.get_height() - 53, 86, 36))
+            self.boton_color1 = pygame.Rect(start_x + ((CELDA_SIZE * self.cols)/2) - 93, screen.get_height() - 53, 86, 36)
+            pygame.draw.rect(screen, NEGRO, self.boton_color1 )
             pygame.draw.rect(screen, ROJO, (start_x + ((CELDA_SIZE * self.cols)/2) - 90, screen.get_height() - 50, 80, 30))
             text_surface = font.render("press 1", True, NEGRO)
             screen.blit(text_surface, (start_x + ((CELDA_SIZE * self.cols)/2) - 80, screen.get_height() - 45))
 
 
-            pygame.draw.rect(screen, NEGRO, (start_x + ((CELDA_SIZE * self.cols)/2) + 7, screen.get_height() - 53, 86, 36))
+            self.boton_color2 = pygame.Rect(start_x + ((CELDA_SIZE * self.cols)/2) + 7, screen.get_height() - 53, 86, 36)
+            pygame.draw.rect(screen, NEGRO, self.boton_color2)
             pygame.draw.rect(screen, AMARILLO, (start_x + ((CELDA_SIZE * self.cols)/2) + 10, screen.get_height() - 50, 80, 30))
             text_surface = font.render("press 2", True, NEGRO)
             screen.blit(text_surface, (start_x + ((CELDA_SIZE * self.cols)/2) + 20, screen.get_height() - 45))
@@ -246,7 +250,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
-            elif tipo == 3:
+            elif tipo == 2:
                 
                 solution = [ #ejemplo2 de 10x10: perro
                     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],

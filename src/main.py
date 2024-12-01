@@ -113,12 +113,13 @@ class Main:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Boton izquierdo del mouse
                     self.last_cell = None  # Reiniciar al iniciar un nuevo clic
-                    if (self.boton1_x <= event.pos[0] <= self.boton1_x + self.boton1_width and self.boton1_y <= event.pos[1] <= self.boton1_y + self.boton1_height): 
-                        self.color = 1
-                        pygame.mixer.Sound.play(self.sound_click)
-                    if (self.boton1_x + 100 <= event.pos[0] <= self.boton1_x + self.boton1_width + 100 and self.boton1_y <= event.pos[1] <= self.boton1_y + self.boton1_height): 
-                        self.color = 2
-                        pygame.mixer.Sound.play(self.sound_click)
+                    if self.mode == "dos_colores":
+                        if (self.board.boton_color1.collidepoint(event.pos)):
+                            self.color = 1
+                            pygame.mixer.Sound.play(self.sound_click)
+                        elif (self.board.boton_color2.collidepoint(event.pos)):
+                            self.color = 2
+                            pygame.mixer.Sound.play(self.sound_click)
 
                     if self.reset_button.collidepoint(event.pos): # Si se hace clic en el botón de reinicio
                         pygame.mixer.Sound.play(self.sound_resetbutton)
