@@ -146,26 +146,31 @@ class Main:
                 cell = self.board.get_cell(pos)
                 if cell and not cell.is_locked and not cell.is_x:  # No permitir pintar si la celda está bloqueada
                     if self.initial_paint_state:  # Si la celda inicial estaba marcada
-                        # Desmarcar la celda y resetear colores
-                        cell.is_painted = False
-                        cell.is_color = 0
-                        pygame.mixer.Sound.play(self.sound_click)  # Sonido al desmarcar
+                        if cell.is_painted:  # Solo desmarcar si está pintada
+                            cell.is_painted = False
+                            cell.is_color = 0
+                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al desmarcar
                     else:
-                        if color == 1:  # Pintar con el primer color
-                            cell.is_color = 2
-                            cell.is_painted = True
-                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 1
-                        elif color == 2:  # Pintar con el segundo color
-                            cell.is_color = 3
-                            cell.is_painted = True
-                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar con color 2
-                        else:  # Pintar sin especificar color (modo clásico)
-                            cell.is_painted = True
-                            pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar en modo clásico
+                        if self.mode == "clasico":
+                            # Verificar si ya está pintada antes de pintar en modo clásico
+                            if not cell.is_painted:
+                                cell.is_painted = True
+                                pygame.mixer.Sound.play(self.sound_click)  # Sonido al marcar
+                        else:
+                            # Modo de dos colores: aplicar color si no coincide con el actual
+                            if (color == 1 and cell.is_color != 2) or (color == 2 and cell.is_color != 3):
+                                pygame.mixer.Sound.play(self.sound_click)  # Sonido al pintar
+                                if color == 1:  # Pintar con el primer color
+                                    cell.is_color = 2
+                                    cell.is_painted = True
+                                elif color == 2:  # Pintar con el segundo color
+                                    cell.is_color = 3
+                                    cell.is_painted = True
     
                     if lock:
                         cell.is_locked = True  # Bloquear la celda si se especifica
                     self.last_cell = pos  # Actualizar la última celda marcada
+
 
 
                         
