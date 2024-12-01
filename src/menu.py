@@ -9,13 +9,17 @@ COLOR_FONDO = (255, 250, 205)
 COLOR_BOTON = (160, 121, 95)
 COLOR_TEXTO = (50, 50, 50)
 
+pygame.mixer.init()  # Inicializar el mixer de Pygame
+sound_switch = pygame.mixer.Sound("assets/sonidos/resetbutton.mp3") # se carga el audio de burbuja
+sound_pressed = pygame.mixer.Sound("assets/sonidos/keyTap.mp3") # se carga el audio de tecla 
+
 
 def mostrar_menu_home(screen): 
-
     seleccion = 0
     screen = pygame.display.set_mode((400, 400))
     pygame.display.set_caption('NONOGRAMA!!') # nombre de la ventana
     font = pygame.font.SysFont('Comic Sans MS', 60) # estilo de la fuente
+    
 
     # Opciones de tamaño
     opciones = ['Jugar', 'Reglas', 'Salir']
@@ -48,7 +52,9 @@ def mostrar_menu_home(screen):
 
             # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
+                if (seleccion != i):
+                    pygame.mixer.Sound.play(sound_switch)
+                    seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect) # renderiza el texto
 
@@ -56,6 +62,7 @@ def mostrar_menu_home(screen):
 
         # Manejar eventos
         for event in pygame.event.get():
+
             # Salir al apretar boton de cierre
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -65,12 +72,16 @@ def mostrar_menu_home(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch) # se reproduce el audio
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch) # se reproduce el audio
                 elif event.key == pygame.K_RETURN:
                     if seleccion == 0:
+                        pygame.mixer.Sound.play(sound_pressed)
                         return mostrar_menu_mode(screen)
                     elif seleccion == 1:
+                        pygame.mixer.Sound.play(sound_pressed)
                         return mostrar_menu_reglas(screen) 
                     else:
                         pygame.quit()
@@ -82,6 +93,7 @@ def mostrar_menu_home(screen):
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
+                            pygame.mixer.Sound.play(sound_pressed)
                             if i == 0:
                                 return mostrar_menu_mode(screen)
                             elif i == 1:
@@ -89,17 +101,6 @@ def mostrar_menu_home(screen):
                             else:
                                 pygame.quit()
                                 sys.exit()
-
-
-import pygame
-import sys
-
-# Colores
-BLANCO = (255, 255, 255)
-NEGRO = (0, 0, 0)
-COLOR_FONDO = (240, 230, 200)
-COLOR_BOTON = (160, 121, 95)
-COLOR_TEXTO = (50, 50, 50)
 
 def wrap_text(text, font, max_width, margin=20):
     """
@@ -207,8 +208,10 @@ def mostrar_menu_reglas(screen):
                     # Si no estamos en la última instrucción, mostramos la siguiente
                     if current_instruction < len(reglas_text) - 1:
                         current_instruction += 1
+                        pygame.mixer.Sound.play(sound_switch)
                     else:
                         # Si hemos llegado al final, llamamos a la función para jugar
+                        pygame.mixer.Sound.play(sound_pressed)
                         return mostrar_menu_mode(screen)
 
             # Usar la tecla ESC para regresar al menú principal
@@ -218,7 +221,9 @@ def mostrar_menu_reglas(screen):
                 elif event.key == pygame.K_RETURN:
                     if current_instruction < len(reglas_text) - 1:
                         current_instruction += 1
+                        pygame.mixer.Sound.play(sound_switch)
                     else:
+                        pygame.mixer.Sound.play(sound_pressed)
                         return mostrar_menu_mode(screen)
                 
 
@@ -260,7 +265,9 @@ def mostrar_menu_mode(screen):
 
             # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
+                if (seleccion != i):
+                    pygame.mixer.Sound.play(sound_switch)
+                    seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect) # renderiza el texto
 
@@ -277,9 +284,12 @@ def mostrar_menu_mode(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch) 
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_RETURN:
+                    pygame.mixer.Sound.play(sound_pressed)
                     if seleccion == 0:
                         return mostrar_menu_size(screen)
                     elif seleccion == 1:
@@ -293,6 +303,7 @@ def mostrar_menu_mode(screen):
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
+                            pygame.mixer.Sound.play(sound_pressed)
                             if i == 0:
                                 return mostrar_menu_size(screen)
                             elif i == 1:
@@ -338,7 +349,9 @@ def mostrar_menu_size(screen):
 
             # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
+                if (seleccion != i):
+                    pygame.mixer.Sound.play(sound_switch)
+                    seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect) # renderiza el texto
 
@@ -355,9 +368,12 @@ def mostrar_menu_size(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_RETURN:
+                    pygame.mixer.Sound.play(sound_pressed)
                     if seleccion == 4:
                         return mostrar_menu_mode(screen)
                     else:
@@ -370,6 +386,7 @@ def mostrar_menu_size(screen):
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
+                            pygame.mixer.Sound.play(sound_pressed)
                             if i == 4:
                                 return mostrar_menu_mode(screen)
                             else:
@@ -412,7 +429,9 @@ def mostrar_menu_size_colores(screen):
 
             # Resaltar la opción con el mouse
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i  # Cambia la opción seleccionada al pasar el mouse
+                if (seleccion != i):
+                    pygame.mixer.Sound.play(sound_switch)
+                    seleccion = i  # Cambia la opción seleccionada al pasar el mouse
 
             screen.blit(text_surface, text_rect) # renderiza el texto
 
@@ -429,14 +448,18 @@ def mostrar_menu_size_colores(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_RETURN:
+                    pygame.mixer.Sound.play(sound_pressed)
                     if seleccion == 2:
                         return mostrar_menu_mode(screen)
                     else:
                         return mostrar_menu_type(screen, seleccion, "dos_colores")
                 elif event.key == pygame.K_ESCAPE:
+                    pygame.mixer.Sound.play(sound_pressed)
                     return mostrar_menu_mode(screen)
 
             # Detectar click del mouse
@@ -444,6 +467,7 @@ def mostrar_menu_size_colores(screen):
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
+                            pygame.mixer.Sound.play(sound_pressed)
                             if i == 2:
                                 return mostrar_menu_mode(screen)
                             else:
@@ -481,7 +505,9 @@ def mostrar_menu_type(screen, tamano, mode):
             option_rects.append(text_rect)
 
             if text_rect.collidepoint(mouse_pos):
-                seleccion = i
+                if (seleccion != i):
+                    pygame.mixer.Sound.play(sound_switch)
+                    seleccion = i
 
             screen.blit(text_surface, text_rect)
 
@@ -495,9 +521,12 @@ def mostrar_menu_type(screen, tamano, mode):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
+                    pygame.mixer.Sound.play(sound_switch)
                 elif event.key == pygame.K_RETURN:
+                    pygame.mixer.Sound.play(sound_pressed)
                     if seleccion == 0:
                         return nanogramas_type(tamano, 1, mode)
                     elif seleccion == 1:
@@ -509,6 +538,7 @@ def mostrar_menu_type(screen, tamano, mode):
                         return mostrar_menu_size(screen)
             
                 elif event.key == pygame.K_ESCAPE:
+                    pygame.mixer.Sound.play(sound_pressed)
                     if mode == "clasico":
                         return mostrar_menu_size(screen)
                     else:
@@ -518,6 +548,7 @@ def mostrar_menu_type(screen, tamano, mode):
                 if event.button == 1:
                     for i, rect in enumerate(option_rects):
                         if rect.collidepoint(event.pos):
+                            pygame.mixer.Sound.play(sound_pressed)
                             if i == 0:
                                 return nanogramas_type(tamano, 1, mode)
                             elif i == 1:

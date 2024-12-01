@@ -27,6 +27,7 @@ class Main:
         self.sound_win = pygame.mixer.Sound("assets/sonidos/win-sound.mp3")  # al ganar el juego
         self.sound_board_ready = pygame.mixer.Sound("assets/sonidos/boardReady.mp3") # al iniciar el tablero
         self.sound_resetbutton = pygame.mixer.Sound("assets/sonidos/resetbutton.mp3") # click en boton de restear el tablero
+        self.sound_pressed = pygame.mixer.Sound("assets/sonidos/keyTap.mp3") # se carga el audio de tecla 
         
         # Cargar Imagen
         self.background_image = pygame.image.load("assets/imagen/background2.jpg") 
@@ -114,7 +115,7 @@ class Main:
                         pygame.mixer.Sound.play(self.sound_resetbutton)
                         self.reset_buttontab() # Reiniciar el tablero
                     elif self.board.boton_volver.collidepoint(event.pos):  # Si se hace clic en el botón de volver
-                        pygame.mixer.Sound.play(self.sound_resetbutton)
+                        pygame.mixer.Sound.play(self.sound_pressed)
                         self.return_to_menu()
                     else:
                         self.initial_paint_state = self.get_cell_paint_state(event.pos)  # Obtener el estado inicial de la celda
