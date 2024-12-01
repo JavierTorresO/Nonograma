@@ -450,7 +450,6 @@ def mostrar_menu_size_colores(screen):
                                 return mostrar_menu_type(screen, i, "dos_colores")
 
 def mostrar_menu_type(screen, tamano, mode):
-    print("entro a type")
     seleccion = 0
     pygame.display.set_caption('Seleccione el tipo de tablero.')
     font = pygame.font.SysFont('Comic Sans MS', 50)
@@ -496,10 +495,8 @@ def mostrar_menu_type(screen, tamano, mode):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     seleccion = (seleccion + 1) % len(opciones)
-                    print(seleccion)
                 elif event.key == pygame.K_UP:
                     seleccion = (seleccion - 1) % len(opciones)
-                    print(seleccion)
                 elif event.key == pygame.K_RETURN:
                     if seleccion == 0:
                         return nanogramas_type(tamano, 1, mode)
@@ -542,6 +539,4 @@ def nanogramas_type(tamano, tipo, mode):
         2: (15, 15, tipo, mode),
         3: (20, 20, tipo, mode),
     }
-    print("entro")
-    print(tamanos.get(tamano))
     return tamanos.get(tamano)
