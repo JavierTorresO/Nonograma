@@ -140,6 +140,9 @@ class Main:
                         self.color = 2
                         # print(self.color)
                         pygame.mixer.Sound.play(self.sound_click)
+                if event.key == pygame.K_r:
+                    pygame.mixer.Sound.play(self.sound_resetbutton)
+                    self.reset_buttontab()
                 
 
     def handle_cell_click(self, mouse_pos, color=None, lock=False):

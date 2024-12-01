@@ -216,8 +216,15 @@ def mostrar_menu_reglas(screen):
                         return mostrar_menu_mode(screen)
 
             # Usar la tecla ESC para regresar al menú principal
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return mostrar_menu_home(screen)  # Vuelve al menú de selección de modo
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return mostrar_menu_home(screen)  # Vuelve al menú de selección de modo
+                elif event.key == pygame.K_RETURN:
+                    if current_instruction < len(reglas_text) - 1:
+                        current_instruction += 1
+                    else:
+                        return mostrar_menu_mode(screen)
+                
 
 
 def mostrar_menu_mode(screen):
@@ -462,7 +469,7 @@ def mostrar_menu_type(screen, mode):
     # Opciones de tipo
     if mode == "clasico": opciones = ['Nonograma 1', 'Nonograma 2', 'Nonograma 3', 'Volver']
     else: opciones = ['Nonograma 1', 'Nonograma 2', 'Volver']
-    
+
     option_rects = []
 
     while True:
