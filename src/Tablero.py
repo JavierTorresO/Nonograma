@@ -126,7 +126,6 @@ class Tablero:
                             return False
 
         return True
-
     
 def generar_pistas(solution):
     pistas_horizontales = []
@@ -186,6 +185,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
     if mode == "clasico":
         if rows == 5 and cols == 5:
             if tipo == 1:
+              
 
                 solution = [ #ejemplo1 de 5x5: corazon
                     [0, 1, 0, 1, 0],
@@ -198,7 +198,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
-            else:
+            elif tipo == 2:
                 
                 solution = [ #ejemplo2 de 5x5: ajedrez
                     [1, 0, 1, 0, 1],
@@ -211,6 +211,20 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
+              
+            elif tipo==3:
+              
+                solution = [  #Carita feliz
+                    [0, 1, 0, 1, 0],
+                    [0, 1, 0, 1, 0],
+                    [0, 0, 1, 0, 0],
+                    [1, 0, 0, 0, 1],
+                    [0, 1, 1, 1, 0],
+                ]
+                return hints, solution
+                
+                hints = generar_pistas(solution)
+
         elif rows == 10 and cols == 10:
             if tipo == 1:
 
@@ -230,7 +244,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
-            else:
+            elif tipo == 3:
                 
                 solution = [ #ejemplo2 de 10x10: perro
                     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
@@ -248,6 +262,26 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
+              
+             elif tipo==3:
+
+                 solution = [  # Pez
+                    [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+                    [1, 1, 0, 0, 1, 1, 1, 0, 0, 0],
+                    [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
+                    [0, 1, 1, 0, 1, 1, 1, 1, 0, 0],
+                    [0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+                    [0, 0, 1, 1, 1, 1, 1, 0, 1, 1],
+                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [0, 1, 1, 0, 1, 1, 1, 1, 1, 0],
+                    [1, 1, 0, 0, 0, 1, 1, 0, 0, 0],
+                    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+                ]
+                
+                hints = generar_pistas(solution)
+                
+                return hints, solution
+
         if rows == 15 and cols == 15:
             if tipo == 1:
             
@@ -272,7 +306,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
-            else:
+            elif tipo == 2:
                 
                 solution = [ # ejemplo2 de 15x15: pato
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -295,6 +329,30 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
+            elif tipo==3:
+            
+                solution = [  #Raton
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+                    [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1],
+                    [0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+                    [1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+                    [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0],
+                    [0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0],
+                    [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+                    [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1],
+                    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1],
+                    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+                    [0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+                    [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0],
+                    [0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0],
+                ]
+
+                hints = generar_pistas(solution)
+
+                return hints, solution
+          
         if rows == 20 and cols == 20:
             if tipo == 1:
 
@@ -324,7 +382,7 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                 hints = generar_pistas(solution)
 
                 return hints, solution
-            else:
+            elif tipo == 2:
 
                 solution = [ #ejemplo2 de 20x20: llave y candado
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
@@ -347,6 +405,34 @@ def seleccionar_nanograma(rows, cols, tipo, mode):
                     [0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1],
                     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1],
                     [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+                ]
+
+                hints = generar_pistas(solution)
+
+                return hints, solution
+            elif tipo==3:
+           
+                solution = [  #Arbol
+                    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+                    [1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+                    [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
+                    [0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1],
+                    [1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1],
+                    [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+                    [1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0],
+                    [1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0],
+                    [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+                    [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 ]
 
                 hints = generar_pistas(solution)

@@ -94,16 +94,6 @@ def mostrar_menu_home(screen):
                                 sys.exit()
 
 
-import pygame
-import sys
-
-# Colores
-BLANCO = (255, 255, 255)
-NEGRO = (0, 0, 0)
-COLOR_FONDO = (240, 230, 200)
-COLOR_BOTON = (160, 121, 95)
-COLOR_TEXTO = (50, 50, 50)
-
 def wrap_text(text, font, max_width, margin=20):
     """
     Envuelve el texto para que se ajuste al ancho máximo de la pantalla.
@@ -460,7 +450,7 @@ def mostrar_menu_type(screen, mode):
     font = pygame.font.SysFont('Comic Sans MS', 50) # Estilo de la fuente
 
     # Opciones de tipo
-    opciones = ['Nanograma 1', 'Nanograma 2', 'Volver']
+    opciones = ['Nanograma 1', 'Nanograma 2', 'Nanograma 3', 'Volver']
     option_rects = []
 
     while True:
